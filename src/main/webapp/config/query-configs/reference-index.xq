@@ -13,7 +13,7 @@ declare function local:list-references($sources as element()*) as node()* {
 
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"></meta><meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1"></meta>
 <title>Eldamo : Reference Index</title>
 <link type="text/css" rel="stylesheet" href="../../css/global.css" />
 </head>
@@ -34,6 +34,12 @@ source in which the text appear. This lexicon also follows this convention. The 
 dates of probable composition.</p>
 <ul> {
     local:list-references(/*/source[@type='work'])
+} </ul>
+<p><b>Minor Works:</b></p>
+<p>The following are reference to minor or fragmentary works not appearing in other, larger documents (such as Elvish
+quotes in inscriptions or letters), or works that contain only isolated Elvish samples.</p>
+<ul> {
+    local:list-references(/*/source[@type='minor-work'])
 } </ul>
 <p><b>Indices:</b></p>
 <p>To avoid referencing every appearance of a proper name in a given primary source, this lexicon instead references its
@@ -74,6 +80,15 @@ original writing by Tolkien. Some are specific to particular languages, as noted
 <p><b>Adûnaic:</b></p>
 <ul> {
     local:list-references(/*/source[@type='adunaic'])
+} </ul>
+<h2><a name="Neologisms"></a>Neologisms</h2>
+<p>The following are some of the sources of the neologisms that appear in Eldamo. Not every neologism appearing in these
+sources also appears in Eldamo, and vice versa. In general, neologisms in Eldamo are credited by creator rather than
+source, but there are exceptions in the case of Neo-Eldarin authors with large bodies of work. Furthermore, some sources
+don’t list the original creator, in which case Eldamo credits the source. Uncredited neologisms in Eldamo were either
+created by me (Paul Strack) or have an unknown source.</p>
+<ul> {
+    local:list-references(/*/source[@type='neologisms'])
 } </ul>
 </body>
 </html>

@@ -2,789 +2,618 @@ import module namespace c = "common.xq" at "common.xq";
 
 <html>
 <body>
-<div> {
-for $ref in //word[not(@speech)][not(ancestor::word[@speech][1]/@speech)]
-return <p>{$ref/@v/string()}</p>
-} </div>
+<table> {
+let $l := 'p'
+let $exclusions := <exclusions>
+<word l="p" v="am-"/>
+<word l="p" v="AL(A)"/>
+<word l="p" v="aklari(n)kwā"/>
+<word l="p" v="aklar(a)"/>
+<word l="p" v="airō"/>
+<word l="eq" v="neldor"/>
+<word l="eq" v="ya(n)"/>
+<word l="eq" v="yere(n)"/>
+<word l="eq" v="yak(k)o"/>
+<word l="eq" v="yara"/>
+<word l="eq" v="yakse¹"/>
+<word l="eq" v="yaim-"/>
+<word l="eq" v="-(w)inte"/>
+<word l="eq" v="wereven(da)"/>
+<word l="eq" v="wen(di)"/>
+<word l="eq" v="-wen"/>
+<word l="eq" v="wal(i)na"/>
+<word l="eq" v="vor(o)"/>
+<word l="eq" v="vilina"/>
+<word l="eq" v="vaqi(e)"/>
+<word l="eq" v="Valis"/>
+<word l="eq" v="-va"/>
+<word l="eq" v="-uran(do)"/>
+<word l="eq" v="úqil"/>
+<word l="eq" v="unqilla(r)"/>
+<word l="eq" v="-(u)ma"/>
+<word l="eq" v="ulun"/>
+<word l="eq" v="ulban"/>
+<word l="eq" v="tuksa"/>
+<word l="eq" v="tengwet(ta)"/>
+<word l="eq" v="tan(y)a"/>
+<word l="eq" v="tanta(ra)"/>
+<word l="eq" v="tala(no)ite"/>
+<word l="eq" v="tala¹"/>
+<word l="eq" v="qi"/>
+<word l="eq" v="-tya²"/>
+<word l="eq" v="súru"/>
+<word l="eq" v="-sse¹"/>
+<word l="eq" v="sor(ne)"/>
+<word l="eq" v="sist(e)"/>
+<word l="eq" v="simp(in)a"/>
+<word l="eq" v="silmerána"/>
+<word l="eq" v="silk(in)a"/>
+<word l="eq" v="siliq(in)a"/>
+<word l="eq" v="sild(r)a"/>
+<word l="eq" v="sa"/>
+<word l="eq" v="seste"/>
+<word l="eq" v="sár(e)a"/>
+<word l="eq" v="saita-"/>
+<word l="eq" v="-(a)r"/>
+<word l="eq" v="rimp(in)a"/>
+<word l="eq" v="(a)rauke"/>
+<word l="eq" v="Rána"/>
+<word l="eq" v="rambe¹"/>
+<word l="eq" v="qent"/>
+<word l="eq" v="qele-"/>
+<word l="eq" v="qanta"/>
+<word l="eq" v="qinde"/>
+<word l="eq" v="qim(en)ea"/>
+<word l="eq" v="-qil(e)a"/>
+<word l="eq" v="qets(im)a"/>
+<word l="eq" v="-qet(se)"/>
+<word l="eq" v="qe²"/>
+<word l="eq" v="pirúk(end)ea"/>
+<word l="eq" v="piqis(se)"/>
+<word l="eq" v="pi(pi)nektar"/>
+<word l="eq" v="pi(o)pin"/>
+<word l="eq" v="pinqisil(da)"/>
+<word l="eq" v="pampil(e)a"/>
+<word l="eq" v="paluva"/>
+<word l="eq" v="palis(te)"/>
+<word l="eq" v="ó(vo)"/>
+<word l="eq" v="otoke"/>
+<word l="eq" v="os"/>
+<word l="eq" v="orqin(di)"/>
+<word l="eq" v="oro"/>
+<word l="eq" v="ongo-"/>
+<word l="eq" v="on(d)"/>
+<word l="eq" v="yolme"/>
+<word l="eq" v="omohére"/>
+<word l="eq" v="oli-"/>
+<word l="eq" v="oldo(s)"/>
+<word l="eq" v="olde"/>
+<word l="eq" v="olwe(n)"/>
+<word l="eq" v="oive"/>
+<word l="eq" v="nyan(yo)"/>
+<word l="eq" v="nelkaiya"/>
+<word l="eq" v="nounonda"/>
+<word l="eq" v="nond(in)a"/>
+<word l="eq" v="nond(in)a"/>
+<word l="eq" v="noldare"/>
+<word l="eq" v="nuo"/>
+<word l="eq" v="-nta"/>
+<word l="eq" v="niqetil"/>
+<word l="eq" v="ninqe"/>
+<word l="eq" v="nier"/>
+<word l="eq" v="mike"/>
+<word l="eq" v="olme(t)"/>
+<word l="eq" v="-inen"/>
+<word l="eq" v="nelkesto"/>
+<word l="eq" v="neldorin"/>
+<word l="eq" v="nelde"/>
+<word l="eq" v="-ndon"/>
+<word l="eq" v="Narqelion"/>
+<word l="eq" v="nan"/>
+<word l="eq" v="nal"/>
+<word l="eq" v="móre"/>
+<word l="eq" v="moar(do)"/>
+<word l="eq" v="minya yukainen(ya)"/>
+<word l="eq" v="mindorinya"/>
+<word l="eq" v="milnar(wa)"/>
+<word l="eq" v="-pin(ke)"/>
+<word l="eq" v="meles(se)"/>
+<word l="eq" v="melin"/>
+<word l="eq" v="mavar(do)"/>
+<word l="eq" v="maptale-lehesta"/>
+<word l="eq" v="man"/>
+<word l="eq" v="lúne"/>
+<word l="eq" v="lóte"/>
+<word l="eq" v="lon(de)"/>
+<word l="eq" v="-llo"/>
+<word l="eq" v="liqin(a)"/>
+<word l="eq" v="linqe"/>
+<word l="eq" v="li(n)-"/>
+<word l="eq" v="lenqelénu"/>
+<word l="eq" v="lámarin"/>
+<word l="eq" v="lirit(ta)"/>
+<word l="eq" v="karpalima"/>
+<word l="eq" v="karmalin(da)"/>
+<word l="eq" v="kandóra"/>
+<word l="eq" v="kal(l)u-"/>
+<word l="eq" v="kalain(e)a"/>
+<word l="eq" v="kainendan"/>
+<word l="eq" v="is"/>
+<word l="eq" v="-ion"/>
+<word l="eq" v="ingwil(in)"/>
+<word l="eq" v="-ine"/>
+<word l="eq" v="-íne(a)"/>
+<word l="eq" v="-ina"/>
+<word l="eq" v="il(l)aika"/>
+<word l="eq" v="iluin(do)"/>
+<word l="eq" v="on(t)"/>
+<word l="eq" v="i"/>
+<word l="eq" v="hualtya"/>
+<word l="eq" v="hara(nda)"/>
+<word l="eq" v="hos(se)"/>
+<word l="eq" v="kópa"/>
+<word l="eq" v="hón(a)"/>
+<word l="eq" v="hon(do)"/>
+<word l="eq" v="holále"/>
+<word l="eq" v="unk(o)"/>
+<word l="eq" v="ankar"/>
+<word l="eq" v="hil(de)"/>
+<word l="eq" v="ilweran(ta)"/>
+<word l="eq" v="iluqinga"/>
+<word l="eq" v="filqe"/>
+<word l="eq" v="fandor"/>
+<word l="eq" v="falas(se)"/>
+<word l="eq" v="erus(ta)"/>
+<word l="eq" v="ettanu"/>
+<word l="eq" v="en(we)"/>
+<word l="eq" v="enqesto"/>
+<word l="eq" v="enqest(y)a"/>
+<word l="eq" v="ea(r)"/>
+<word l="eq" v="lutu-"/>
+<word l="eq" v="tyú(ta)"/>
+<word l="eq" v="kirya"/>
+<word l="eq" v="kili-"/>
+<word l="eq" v="kelu(me)"/>
+<word l="eq" v="kara-"/>
+<word l="eq" v="aurqil(e)a"/>
+<word l="eq" v="at-"/>
+<word l="eq" v="asampe(a)"/>
+<word l="eq" v="har(e)"/>
+<word l="eq" v="ar(a)"/>
+<word l="eq" v="angaisin(i)e"/>
+<word l="eq" v="ando(n)"/>
+<word l="eq" v="ande(a)"/>
+<word l="eq" v="ari-"/>
+<word l="eq" v="an(a)"/>
+<word l="eq" v="ambi"/>
+<word l="eq" v="tarqin(a)"/>
+<word l="en" v="tum(b)"/>
+<word l="en" v="lhigen"/>
+<word l="en" v="tham(b)"/>
+<word l="en" v="gaug"/>
+<word l="en" v="orvath"/>
+<word l="g" v="-win"/>
+<word l="en" v="nen(n)"/>
+<word l="en" v="mig"/>
+<word l="en" v="lhim(p)"/>
+<word l="en" v="lham(b)"/>
+<word l="en" v="go-"/>
+<word l="en" v="glavaith"/>
+<word l="en" v="glam(m)"/>
+<word l="en" v="fionwin"/>
+<word l="en" v="fan(d)"/>
+<word l="en" v="e(i)ngion"/>
+<word l="en" v="elven"/>
+<word l="en" v="elvain(n)"/>
+<word l="en" v="Uidhel"/>
+<word l="en" v="dram(b)"/>
+<word l="en" v="dam(b)"/>
+<word l="en" v="dag-"/>
+<word l="en" v="cum(b)"/>
+<word l="en" v="bhraig"/>
+<word l="en" v="ornoth"/>
+<word l="en" v="am(b)red"/>
+<word l="en" v="awes"/>
+<word l="en" v="am(m)arth"/>
+<word l="q" v="cirya¹"/>
+<word l="q" v="cuivië¹"/>
+<word l="g" v="Gwalthir"/>
+<word l="g" v="u"/>
+<word l="g" v="u-"/>
+<word l="g" v="duilin(g)"/>
+<word l="g" v="tôb(a)"/>
+<word l="g" v="adr(a)"/>
+<word l="g" v="-(o)th"/>
+<word l="g" v="tess(il)"/>
+<word l="g" v="talgrin(d)"/>
+<word l="g" v="ain²"/>
+<word l="g" v="si(n)-"/>
+<word l="g" v="-(r)on"/>
+<word l="g" v="ress"/>
+<word l="g" v="ren(d)"/>
+<word l="g" v="-(r)in"/>
+<word l="g" v="oth"/>
+<word l="g" v="osp(a)"/>
+<word l="g" v="olod"/>
+<word l="g" v="ol"/>
+<word l="g" v="-r(i)ol"/>
+<word l="g" v="-(i)ol"/>
+<word l="g" v="-odro(n)"/>
+<word l="g" v="nio(s)"/>
+<word l="g" v="-(n)ir"/>
+<word l="g" v="nig(la)"/>
+<word l="g" v="ni-"/>
+<word l="g" v="nethli"/>
+<word l="g" v="nenn"/>
+<word l="g" v="deldron"/>
+<word l="g" v="na"/>
+<word l="g" v="moth(in)"/>
+<word l="g" v="môna"/>
+<word l="g" v="mavwin¹"/>
+<word l="g" v="mar(o)n"/>
+<word l="g" v="loda-"/>
+<word l="g" v="limp(elis)"/>
+<word l="g" v="elf(in)"/>
+<word l="g" v="laith(r)a-"/>
+<word l="g" v="(g)leg"/>
+<word l="g" v="laib"/>
+<word l="g" v="ir"/>
+<word l="g" v="bo(n)"/>
+<word l="g" v="-(i)on"/>
+<word l="g" v="in-"/>
+<word l="g" v="ilt-"/>
+<word l="g" v="idhr(a)"/>
+<word l="g" v="alc(hor)"/>
+<word l="g" v="-iont(ha)"/>
+<word l="g" v="i"/>
+<word l="g" v="hum(i)los"/>
+<word l="g" v="dauth(r)a-"/>
+<word l="g" v="hal(a)-"/>
+<word l="g" v="hab(in)"/>
+<word l="g" v="gwiw"/>
+<word l="g" v="gwer-"/>
+<word l="g" v="gwen(n)"/>
+<word l="g" v="gwin"/>
+<word l="g" v="gwembel"/>
+<word l="g" v="gwe-"/>
+<word l="g" v="gwarin(n)"/>
+<word l="g" v="gwar(e)dhon"/>
+<word l="g" v="gwar(e)dhir"/>
+<word l="g" v="gurth(u)"/>
+<word l="g" v="govin(d)riol"/>
+<word l="g" v="gonothri(n)"/>
+<word l="g" v="Golda"/>
+<word l="g" v="olf(in)"/>
+<word l="g" v="godaithri(o)n"/>
+<word l="g" v="go-¹"/>
+<word l="g" v="glo(r)nethlin"/>
+<word l="g" v="-glin"/>
+<word l="g" v="glen(n)"/>
+<word l="g" v="glar(os)"/>
+<word l="g" v="glant(hi)"/>
+<word l="g" v="glair"/>
+<word l="g" v="gima-"/>
+<word l="g" v="gerd(h)olm"/>
+<word l="g" v="gar(th)"/>
+<word l="g" v="fuglas"/>
+<word l="g" v="gam(m)a-"/>
+<word l="g" v="gal(a)"/>
+<word l="g" v="glarw(ed)"/>
+<word l="g" v="gad(a)"/>
+<word l="g" v="fuior"/>
+<word l="g" v="fini(o)s"/>
+<word l="g" v="finn"/>
+<word l="g" v="bilin(c)"/>
+<word l="g" v="fidhrad"/>
+<word l="g" v="far(o)n"/>
+<word l="g" v="tuil"/>
+<word l="g" v="er(e)tha-"/>
+<word l="g" v="eng(a)"/>
+<word l="g" v="elm(en)"/>
+<word l="g" v="el(u)m"/>
+<word l="g" v="aithla-"/>
+<word l="g" v="ecthel(uin)"/>
+<word l="g" v="aithl"/>
+<word l="g" v="est(i)rin"/>
+<word l="g" v="egli(n)"/>
+<word l="g" v="edh"/>
+<word l="g" v="cwivros"/>
+<word l="g" v="dorn(a)"/>
+<word l="g" v="cwim(ri)"/>
+<word l="g" v="cris(s)"/>
+<word l="g" v="crunc"/>
+<word l="g" v="clum(mi)"/>
+<word l="g" v="cing(win)"/>
+<word l="g" v="-chi"/>
+<word l="g" v="carn(in)"/>
+<word l="g" v="brin(in)"/>
+<word l="g" v="bros(s)"/>
+<word l="g" v="bron(n)"/>
+<word l="g" v="bar(n)a-"/>
+<word l="g" v="martion"/>
+<word l="g" v="ba"/>
+<word l="g" v="ausin"/>
+<word l="g" v="avosaith"/>
+<word l="g" v="aur(a)"/>
+<word l="g" v="arin(g)"/>
+<word l="g" v="a"/>
+<word l="g" v="anthor(in)"/>
+<word l="g" v="annor(in)"/>
+<word l="g" v="mart(os)"/>
+<word l="g" v="alw(eg)"/>
+<word l="g" v="alfuil(in)"/>
+<word l="g" v="aglar(i)ol"/>
+<word l="g" v="air(in)"/>
+<word l="g" v="usc"/>
+<word l="g" v="(n)ada"/>
+<word l="s" v="aen"/>
+<word l="s" v="a¹"/>
+<word l="s" v="alph"/>
+<word l="s" v="and"/>
+<word l="s" v="annon"/>
+<word l="s" v="ar(a)-"/>
+<word l="s" v="athae"/>
+<word l="s" v="ent"/>
+<word l="s" v="canthui"/>
+<word l="s" v="cîw"/>
+<word l="s" v="cû"/>
+<word l="s" v="dol(l)"/>
+<word l="s" v="dúath"/>
+<word l="s" v="Edhel"/>
+<word l="s" v="Eledh"/>
+<word l="s" v="êl"/>
+<word l="s" v="en¹"/>
+<word l="s" v="enedh"/>
+<word l="s" v="esten(t)"/>
+<word l="s" v="gaearon"/>
+<word l="s" v="galadh"/>
+<word l="s" v="glan(n)"/>
+<word l="s" v="glîn(n)"/>
+<word l="s" v="Golodh"/>
+<word l="s" v="golas"/>
+<word l="s" v="golodh"/>
+<word l="s" v="gwae(w)"/>
+<word l="s" v="hadhro"/>
+<word l="s" v="hadhwa-"/>
+<word l="s" v="haudh"/>
+<word l="s" v="heledh"/>
+<word l="s" v="hí"/>
+<word l="s" v="(h)lô"/>
+<word l="s" v="hwâ"/>
+<word l="s" v="i¹"/>
+<word l="s" v="-ian(d)"/>
+<word l="s" v="-iel¹"/>
+<word l="s" v="-ion²"/>
+<word l="s" v="lam"/>
+<word l="s" v="lass"/>
+<word l="s" v="lind¹"/>
+<word l="s" v="loss"/>
+<word l="s" v="mêd(h)"/>
+<word l="s" v="men¹"/>
+<word l="s" v="míriel"/>
+<word l="s" v="nalla"/>
+<word l="s" v="neledh"/>
+<word l="s" v="nin"/>
+<word l="s" v="nos(s)"/>
+<word l="s" v="ogol"/>
+<word l="s" v="Orbelain"/>
+<word l="s" v="othui"/>
+<word l="s" v="Orgaladhad"/>
+<word l="s" v="othgar(ed)"/>
+<word l="s" v="othol"/>
+<word l="s" v="rem"/>
+<word l="s" v="rhûn"/>
+<word l="s" v="teitha-"/>
+<word l="s" v="thind"/>
+<word l="s" v="thoron"/>
+<word l="s" v="tolodh"/>
+<word l="n" v="orchal"/>
+<word l="n" v="-(i)ol"/>
+<word l="n" v="hae"/>
+<word l="n" v="merilin(n)"/>
+<word l="n" v="lham(b)"/>
+<word l="n" v="-iel"/>
+<word l="n" v="forn(en)"/>
+<word l="n" v="heledir(n)"/>
+<word l="n" v="haudh"/>
+<word l="n" v="hann"/>
+<word l="n" v="glaer"/>
+<word l="n" v="galadh"/>
+<word l="n" v="oer"/>
+<word l="n" v="dúlin(n)"/>
+<word l="n" v="car(dh)"/>
+<word l="n" v="ambenn"/>
+<word l="q" v="yondë"/>
+<word l="q" v="yó(m)"/>
+<word l="q" v="-xë¹"/>
+<word l="q" v="wingë"/>
+<word l="q" v="wendë"/>
+<word l="q" v="-wë"/>
+<word l="q" v="vaiwë"/>
+<word l="q" v="úvanë(a)"/>
+<word l="q" v="usquë"/>
+<word l="q" v="ua-"/>
+<word l="q" v="-ttë¹"/>
+<word l="q" v="to(lo)sta"/>
+<word l="q" v="tillë"/>
+<word l="q" v="tassë"/>
+<word l="q" v="tasar(ë)"/>
+<word l="q" v="tar(a)"/>
+<word l="q" v="tar(a)"/>
+<word l="q" v="-tar"/>
+<word l="q" v="tancal(a)"/>
+<word l="q" v="tal(da)"/>
+<word l="q" v="talda"/>
+<word l="q" v="tai¹"/>
+<word l="q" v="sís"/>
+<word l="q" v="-ilco"/>
+<word l="q" v="siar(ë)"/>
+<word l="q" v="sir(a)"/>
+<word l="q" v="sá"/>
+<word l="q" v="ron(go)"/>
+<word l="q" v="-rya¹"/>
+<word l="q" v="ro-"/>
+<word l="q" v="-r(o)"/>
+<word l="q" v="riel(lë)"/>
+<word l="q" v="rauco"/>
+<word l="q" v="quín(ë)"/>
+<word l="q" v="qui"/>
+<word l="q" v="quet-"/>
+<word l="q" v="Quenyarin"/>
+<word l="q" v="Quenya"/>
+<word l="q" v="quenta"/>
+<word l="q" v="Quendë"/>
+<word l="q" v="quén"/>
+<word l="q" v="quár(ë)"/>
+<word l="q" v="cëa(n)"/>
+<word l="q" v="palantír"/>
+<word l="q" v="otso"/>
+<word l="q" v="o(to)sta"/>
+<word l="q" v="ontari(l)"/>
+<word l="q" v="omentië"/>
+<word l="q" v="olass(i)ë"/>
+<word l="q" v="oia(la)"/>
+<word l="q" v="-nta"/>
+<word l="q" v="nos(së)"/>
+<word l="q" v="nórë"/>
+<word l="q" v="niquis(së)"/>
+<word l="q" v="net(ë)"/>
+<word l="q" v="ne(re)sta"/>
+<word l="q" v="nenda"/>
+<word l="q" v="nel(e)quë"/>
+<word l="q" v="nel(d)esta"/>
+<word l="q" v="-(n)dur"/>
+<word l="q" v="-ndon"/>
+<word l="q" v="-(n)dil"/>
+<word l="q" v="minquë"/>
+<word l="q" v="-lmë¹"/>
+<word l="q" v="mar(da)"/>
+<word l="q" v="maqua"/>
+<word l="q" v="man"/>
+<word l="q" v="Maia"/>
+<word l="q" v="lunca"/>
+<word l="q" v="luinë"/>
+<word l="q" v="-lta"/>
+<word l="q" v="lón(a)"/>
+<word l="q" v="li(n)-"/>
+<word l="q" v="lepekan(t)"/>
+<word l="q" v="lempë"/>
+<word l="q" v="it(ë)"/>
+<word l="q" v="-itë"/>
+<word l="q" v="-ion"/>
+<word l="q" v="inquë"/>
+<word l="q" v="ilvan(y)a"/>
+<word l="q" v="-ien¹"/>
+<word l="q" v="-iel"/>
+<word l="q" v="-ië²"/>
+<word l="q" v="hrú(y)a"/>
+<word l="q" v="hlón(a)"/>
+<word l="q" v="heru"/>
+<word l="q" v="ca"/>
+<word l="q" v="et(e)-"/>
+<word l="q" v="epetai"/>
+<word l="q" v="opo"/>
+<word l="q" v="en(a)"/>
+<word l="q" v="coiv(i)ë"/>
+<word l="q" v="castol(o)"/>
+<word l="q" v="cas(ta)"/>
+<word l="q" v="Casar"/>
+<word l="q" v="ca(na)sta"/>
+<word l="q" v="axë"/>
+<word l="q" v="auta-¹"/>
+<word l="q" v="au-"/>
+<word l="q" v="atya¹"/>
+<word l="q" v="at(a)-"/>
+<word l="q" v="asëa"/>
+<word l="q" v="as(a)-"/>
+<word l="q" v="árë"/>
+<word l="q" v="arata"/>
+<word l="q" v="ar(a)-"/>
+<word l="q" v="ar(a)"/>
+<word l="q" v="ar"/>
+<word l="q" v="an(a)"/>
+<word l="q" v="ar(i)-"/>
+<word l="q" v="an(a)-"/>
+<word l="q" v="amya"/>
+<word l="q" v="alcarin(qua)"/>
+<word l="q" v="al(a)-²"/>
+<word l="q" v="al(a)-¹"/>
+<word l="q" v="a"/>
+<word l="mq" v="an-"/>
+<word l="mq" v="ar"/>
+<word l="mq" v="an(ner)"/>
+<word l="mq" v="an(ner)"/>
+<word l="mq" v="at(a)-"/>
+<word l="mq" v="au(ve)"/>
+<word l="mq" v="ear"/>
+<word l="mq" v="elen"/>
+<word l="mq" v="kalarin(a)"/>
+<word l="mq" v="engwa²"/>
+<word l="mq" v="falmar(in)"/>
+<word l="mq" v="halatir(no)"/>
+<word l="mq" v="qantien"/>
+<word l="mq" v="i²"/>
+<word l="mq" v="-ite"/>
+<word l="mq" v="kulina"/>
+<word l="mq" v="lá¹"/>
+<word l="mq" v="lau(me)"/>
+<word l="mq" v="mai(y)a"/>
+<word l="mq" v="mar(dar)"/>
+<word l="mq" v="meren(de)"/>
+<word l="mq" v="minqetyarme"/>
+<word l="mq" v="nan"/>
+<word l="mq" v="nár(e)"/>
+<word l="mq" v="-(n)dil"/>
+<word l="mq" v="nelke"/>
+<word l="mq" v="nó²"/>
+<word l="mq" v="nu"/>
+<word l="mq" v="númen"/>
+<word l="mq" v="nyar(a)-"/>
+<word l="mq" v="sinome"/>
+<word l="eq" v="alkar(in)"/>
+<word l="eq" v="am(u)-"/>
+<word l="eq" v="(a)mapta-"/>
+<word l="eq" v="Ambalar"/>
+<word l="eq" v="amun"/>
+<word l="mq" v="al(a)-"/>
+<word l="mq" v="ola-"/>
+<word l="mq" v="alkar(e)"/>
+<word l="mq" v="yen(de)"/>
+<word l="mq" v="yár"/>
+<word l="mq" v="vai(y)a"/>
+<word l="mq" v="vaháya"/>
+<word l="mq" v="-(u)va"/>
+<word l="mq" v="úmahta(le)"/>
+<word l="mq" v="tet(ta)"/>
+<word l="mq" v="tasar(e)"/>
+<word l="mq" v="tankil"/>
+<word l="mq" v="-sta¹"/>
+<word l="mq" v="sí"/>
+<word l="mq" v="-(á)re"/>
+<word l="mq" v="Qenya"/>
+<word l="mq" v="qentaro"/>
+<word l="mq" v="qenta"/>
+<word l="mq" v="qár(e)"/>
+<word l="mq" v="orro¹"/>
+<word l="mq" v="o-"/>
+</exclusions>
+for $word in c:lang-words(/*, $l)
+    [not(contains(c:get-speech(.), 'phon'))][not(contains(c:get-speech(.), 'name'))]
+    [not(contains(c:get-speech(.), 'grammar'))][not(contains(c:get-speech(.), 'text'))][not(contains(c:get-speech(.), 'phrase'))]
+    [count(distinct-values(ref[not(inflect)][not(contains(@mark, '†'))][not(contains(@mark, '-'))][not(contains(@mark, '|'))][not(contains(@mark, '?'))][not(contains(@mark, '‽'))][not(contains(@mark, '**'))]
+    [not(correction)][not(change)]/@v/translate(c:normalize-for-sort(.), '’', ''))) gt 1]
+let $variants := string-join(distinct-values($word/ref[not(inflect)][not(contains(@mark, '†'))][not(contains(@mark, '-'))][not(contains(@mark, '|'))][not(contains(@mark, '?'))][not(contains(@mark, '‽'))][not(contains(@mark, '**'))][not(correction)]/@v
+    [not(c:normalize-for-sort(translate(., 'c()|¹²³', 'k')) = c:normalize-for-sort(translate($word/@v, 'c¹²³', 'k')))]/translate(lower-case(.), 'ūë-', 'úe')), '; ')
+let $see-refs := string-join($word/ancestor-or-self::word[last()]//
+    word[see[@v = $word/@v and @l = $word/@l]]/@v/translate(lower-case(.), '¹²³⁴', ''), '; ')
+return
+if (translate($variants, 'ăĕĭŏŭāēīōūökʼ-[]()·¹²’', 'aeiouáéíóúoc') = translate($see-refs, 'āēīōūëök[]()-’', 'áéíóúeoc')) then () else
+if ($exclusions/word[@l = $word/@l and @v=$word/@v]) then () else
+<tr>
+<td>&lt;word l="{c:get-lang($word)}" v="{c:print-word($word, <print-word show-link="y"/>)}"</td>
+<td>{$variants}</td>
+<td>{$see-refs}</td>
+</tr>
+} </table>
 </body>
 </html>
-
-(:
-declare function local:showPE17QRef($value as node()) as xs:string {
-    let $v1 := translate($value, ',', '')
-    let $v2 := replace($v1, 'pl1\. ', '')
-    let $v3 := replace($v2, 'pl2\. ', '')
-    let $v4 := replace($v3, 'DG\*', '')
-    let $v5 := replace($v4, 'pl\. ', '')
-    let $v6 := replace($v5, 'pl1 ', '')
-    let $v7 := replace($v6, 'du. ', '')
-    let $v8 := replace($v7, "'", "’")
-    let $v9 := replace($v8, "arch. ", "")
-    return $v9
-};
-
-declare function local:showPE17QSource($value as node()) as xs:string {
-    let $v1 := translate($value, '/[]', ':')
-    let $v2 := replace($v1, 'PE17:', '0')
-    let $v3 := replace($v2, '0([0-9][0-9][0-9])', '$1')
-    return $v3
-};
-
-declare function local:rowId($row as element()) as xs:string {
-    let $source := substring-before(concat(substring-before(concat($row/td[2], ':'), ':'), '-'), '-')
-    let $value := lower-case(substring-before(concat($row/td[1], '/'), '/')) 
-    let $value2 := translate($value, 'ŋĺkâêîôûāēīōūăĕĭŏŭäëïöü()[]-¯+', 'ñícáéíóúáéíóúaeiouaeiou')
-    let $value3 := replace($value2, 'þ', 'th')
-    let $value4 := replace($value3, 'x', 'cs')
-    let $value5 := replace($value4, 'q', 'qu')
-    let $value6 := replace($value5, 'quu', 'qu')
-    return concat(normalize-space($source), '|', normalize-space($value6))
-};
-
-declare variable $PE17Q := doc('/Users/pfstrack/Dropbox/quenya-web/web/data/PE17Q.xml');
-
-<html>
-<body> {
-let $t1 :=
-    <table> { (
-    <tr><td>i</td><td>013</td></tr>,
-    <tr><td>lúmenn[a]</td><td>013</td></tr>,
-    <tr><td>elen</td><td>014</td></tr>,
-    <tr><td>sile</td><td>014</td></tr>,
-    <tr><td>Elendil</td><td>015</td></tr>,
-    <tr><td>Númenóre</td><td>015</td></tr>,
-    <tr><td>nelya</td><td>017</td></tr>,
-    <tr><td>Lúna</td><td>022</td></tr>,
-    <tr><td>eldi</td><td>025</td></tr>,
-    <tr><td>Taníquetil</td><td>026</td></tr>,
-    <tr><td>Foro-</td><td>028</td></tr>,
-    <tr><td>Hyara-</td><td>028</td></tr>,
-    <tr><td>nan(do)</td><td>028</td></tr>,
-    <tr><td>Nand’</td><td>028</td></tr>,
-    <tr><td>Ondoluncava</td><td>028</td></tr>,
-    <tr><td>Ondolin</td><td>029</td></tr>,
-    <tr><td>Vaire</td><td>033</td></tr>,
-    <tr><td>telperin</td><td>042</td></tr>,
-    <tr><td>tegmá</td><td>043</td></tr>,
-    <tr><td>aranion</td><td>049</td></tr>,
-    <tr><td>malat-</td><td>051</td></tr>,
-    <tr><td>malta-</td><td>051</td></tr>,
-    <tr><td>ninda-</td><td>052</td></tr>,
-    <tr><td>anga</td><td>056</td></tr>,
-    <tr><td>elda</td><td>056</td></tr>,
-    <tr><td>eleni</td><td>056</td></tr>,
-    <tr><td>ep’</td><td>056</td></tr>,
-    <tr><td>laica</td><td>056</td></tr>,
-    <tr><td>torna</td><td>056</td></tr>,
-    <tr><td>an</td><td>057</td></tr>,
-    <tr><td>ana</td><td>057</td></tr>,
-    <tr><td>anamelda</td><td>057</td></tr>,
-    <tr><td>ancalima</td><td>057</td></tr>,
-    <tr><td>ari-</td><td>057</td></tr>,
-    <tr><td>arimelda</td><td>057</td></tr>,
-    <tr><td>elda</td><td>057</td></tr>,
-    <tr><td>elenion</td><td>057</td></tr>,
-    <tr><td>epe</td><td>057</td></tr>,
-    <tr><td>ep’</td><td>057</td></tr>,
-    <tr><td>-illatar</td><td>057</td></tr>,
-    <tr><td>-iltar(o)</td><td>057</td></tr>,
-    <tr><td>na</td><td>057</td></tr>,
-    <tr><td>vanima</td><td>057</td></tr>,
-    <tr><td>vanimelda</td><td>057</td></tr>,
-    <tr><td>vanya</td><td>057</td></tr>,
-    <tr><td>kiryando</td><td>058</td></tr>,
-    <tr><td>tar</td><td>058</td></tr>,
-    <tr><td>-tye</td><td>058</td></tr>,
-    <tr><td>-tie</td><td>058</td></tr>,
-    <tr><td>á na</td><td>058</td></tr>,
-    <tr><td>-ie</td><td>059</td></tr>,
-    <tr><td>lintie</td><td>059</td></tr>,
-    <tr><td>lintierya(nen)</td><td>059</td></tr>,
-    <tr><td>mára</td><td>059</td></tr>,
-    <tr><td>mārie</td><td>059</td></tr>,
-    <tr><td>Naldariel(lle)</td><td>059</td></tr>,
-    <tr><td>na mārie</td><td>059</td></tr>,
-    <tr><td>namárië</td><td>059</td></tr>,
-    <tr><td>norne</td><td>059</td></tr>,
-    <tr><td>lanya</td><td>060</td></tr>,
-    <tr><td>-i</td><td>062</td></tr>,
-    <tr><td>-r</td><td>062</td></tr>,
-    <tr><td>av|va</td><td>063</td></tr>,
-    <tr><td>mar vanwa tyalieva</td><td>064</td></tr>,
-    <tr><td>oromardi</td><td>064</td></tr>,
-    <tr><td>vanwa</td><td>064</td></tr>,
-    <tr><td>yulda</td><td>064</td></tr>,
-    <tr><td>i</td><td>065</td></tr>,
-    <tr><td>lann’</td><td>065</td></tr>,
-    <tr><td>pallan</td><td>065</td></tr>,
-    <tr><td>pelo</td><td>065</td></tr>,
-    <tr><td>tintalle</td><td>066</td></tr>,
-    <tr><td>eldi</td><td>067</td></tr>,
-    <tr><td>eleni</td><td>067</td></tr>,
-    <tr><td>Elentári</td><td>067</td></tr>,
-    <tr><td>Vardo</td><td>067</td></tr>,
-    <tr><td>cari-nwa</td><td>068</td></tr>,
-    <tr><td>carya</td><td>068</td></tr>,
-    <tr><td>matya</td><td>068</td></tr>,
-    <tr><td>melu</td><td>068</td></tr>,
-    <tr><td>ađ</td><td>071</td></tr>,
-    <tr><td>ař</td><td>071</td></tr>,
-    <tr><td>ta</td><td>071</td></tr>,
-    <tr><td>yo</td><td>071</td></tr>,
-    <tr><td>ar</td><td>072</td></tr>,
-    <tr><td>Calacirian</td><td>073</td></tr>,
-    <tr><td>i falmalinnar</td><td>073</td></tr>,
-    <tr><td>míri</td><td>073</td></tr>,
-    <tr><td>-r</td><td>073</td></tr>,
-    <tr><td>undu-</td><td>073</td></tr>,
-    <tr><td>-ndo</td><td>074</td></tr>,
-    <tr><td>Eru</td><td>075</td></tr>,
-    <tr><td>-lmo</td><td>075</td></tr>,
-    <tr><td>aire</td><td>076</td></tr>,
-    <tr><td>-arya</td><td>076</td></tr>,
-    <tr><td>elye</td><td>076</td></tr>,
-    <tr><td>fanyar</td><td>076</td></tr>,
-    <tr><td>i·</td><td>076</td></tr>,
-    <tr><td>lassi</td><td>076</td></tr>,
-    <tr><td>linte</td><td>076</td></tr>,
-    <tr><td>lírinen</td><td>076</td></tr>,
-    <tr><td>met</td><td>076</td></tr>,
-    <tr><td>-t</td><td>076</td></tr>,
-    <tr><td>tier</td><td>076</td></tr>,
-    <tr><td>tári</td><td>076</td></tr>,
-    <tr><td>tário</td><td>076</td></tr>,
-    <tr><td>unótime</td><td>076</td></tr>,
-    <tr><td>-va</td><td>076</td></tr>,
-    <tr><td>ve</td><td>076</td></tr>,
-    <tr><td>ómo</td><td>076</td></tr>,
-    <tr><td>hentie</td><td>077</td></tr>,
-    <tr><td>hentá</td><td>077</td></tr>,
-    <tr><td>parma</td><td>077</td></tr>,
-    <tr><td>li-</td><td>081</td></tr>,
-    <tr><td>lómea</td><td>081</td></tr>,
-    <tr><td>Nantasarion</td><td>081</td></tr>,
-    <tr><td>-nor</td><td>081</td></tr>,
-    <tr><td>th-/sáne-</td><td>081</td></tr>,
-    <tr><td>morna</td><td>082</td></tr>,
-    <tr><td>carni-</td><td>083</td></tr>,
-    <tr><td>farni</td><td>083</td></tr>,
-    <tr><td>Altáriel</td><td>084</td></tr>,
-    <tr><td>Cala</td><td>084</td></tr>,
-    <tr><td>Caltariel</td><td>084</td></tr>,
-    <tr><td>laicá</td><td>084</td></tr>,
-    <tr><td>laiqua</td><td>084</td></tr>,
-    <tr><td>laiqua</td><td>084</td></tr>,
-    <tr><td>pálan-tìr</td><td>086</td></tr>,
-    <tr><td>tíra</td><td>086</td></tr>,
-    <tr><td>lômí</td><td>087</td></tr>,
-    <tr><td>Incánus</td><td>088</td></tr>,
-    <tr><td>am</td><td>090</td></tr>,
-    <tr><td>añ-</td><td>090</td></tr>,
-    <tr><td>Earendil</td><td>090</td></tr>,
-    <tr><td>na</td><td>090</td></tr>,
-    <tr><td>ná</td><td>090</td></tr>,
-    <tr><td>ankalima</td><td>091</td></tr>,
-    <tr><td>eleni</td><td>091</td></tr>,
-    <tr><td>elenion</td><td>091</td></tr>,
-    <tr><td>illi</td><td>091</td></tr>,
-    <tr><td>imb’</td><td>091</td></tr>,
-    <tr><td>lá</td><td>091</td></tr>,
-    <tr><td>quetta</td><td>091</td></tr>,
-    <tr><td>lango</td><td>092</td></tr>,
-    <tr><td>Pelóri</td><td>092</td></tr>,
-    <tr><td>anta</td><td>093</td></tr>,
-    <tr><td>ricir</td><td>094</td></tr>,
-    <tr><td>lepne</td><td>095</td></tr>,
-    <tr><td>otso</td><td>096</td></tr>,
-    <tr><td>aranion</td><td>100</td></tr>,
-    <tr><td>asea</td><td>100</td></tr>,
-    <tr><td>ar</td><td>103</td></tr>,
-    <tr><td>ṃbartā</td><td>104</td></tr>,
-    <tr><td>umbar(ǝ)+í</td><td>104</td></tr>,
-    <tr><td>Arda</td><td>105</td></tr>,
-    <tr><td>sundóma</td><td>105</td></tr>,
-    <tr><td>mbār</td><td>106</td></tr>,
-    <tr><td>már</td><td>106</td></tr>,
-    <tr><td>-nor</td><td>107</td></tr>,
-    <tr><td>nóre</td><td>107</td></tr>,
-    <tr><td>nôr</td><td>107</td></tr>,
-    <tr><td>cauma</td><td>108</td></tr>,
-    <tr><td>koa</td><td>108</td></tr>,
-    <tr><td>taman/tamna</td><td>108</td></tr>,
-    <tr><td>martam-</td><td>109</td></tr>,
-    <tr><td>onos</td><td>111</td></tr>,
-    <tr><td>Celec-ormë</td><td>112</td></tr>,
-    <tr><td>Orome</td><td>112</td></tr>,
-    <tr><td>írime</td><td>112</td></tr>,
-    <tr><td>itaril</td><td>112</td></tr>,
-    <tr><td>kazma</td><td>114</td></tr>,
-    <tr><td>Eldă-kār(ă)</td><td>114</td></tr>,
-    <tr><td>Eldar</td><td>114</td></tr>,
-    <tr><td>Vala</td><td>114</td></tr>,
-    <tr><td>hrōn</td><td>115</td></tr>,
-    <tr><td>Voronwe</td><td>115</td></tr>,
-    <tr><td>kāno</td><td>117</td></tr>,
-    <tr><td>Ingoldofinwe</td><td>118</td></tr>,
-    <tr><td>yestarë</td><td>120</td></tr>,
-    <tr><td>sundóma</td><td>124</td></tr>,
-    <tr><td>tur-</td><td>124</td></tr>,
-    <tr><td>Ñoldorin</td><td>125</td></tr>,
-    <tr><td>ūpa-nēn</td><td>126</td></tr>,
-    <tr><td>ūpa-nēs</td><td>126</td></tr>,
-    <tr><td>falma</td><td>127</td></tr>,
-    <tr><td>-r</td><td>127</td></tr>,
-    <tr><td>Sindarin</td><td>127</td></tr>,
-    <tr><td>sí</td><td>127</td></tr>,
-    <tr><td>lma</td><td>130</td></tr>,
-    <tr><td>lme</td><td>130</td></tr>,
-    <tr><td>met</td><td>130</td></tr>,
-    <tr><td>omentielmo</td><td>130</td></tr>,
-    <tr><td>vē-</td><td>130</td></tr>,
-    <tr><td>hīsilōmi</td><td>133</td></tr>,
-    <tr><td>Ondolinde</td><td>133</td></tr>,
-    <tr><td>ʒalaðā</td><td>135</td></tr>,
-    <tr><td>ʒalðā</td><td>135</td></tr>,
-    <tr><td>aldarembina</td><td>136</td></tr>,
-    <tr><td>aldaron</td><td>136</td></tr>,
-    <tr><td>elme</td><td>136</td></tr>,
-    <tr><td>ngwe</td><td>136</td></tr>,
-    <tr><td>lou</td><td>137</td></tr>,
-    <tr><td>lounē</td><td>137</td></tr>,
-    <tr><td>lowon-</td><td>137</td></tr>,
-    <tr><td>lōn</td><td>137</td></tr>,
-    <tr><td>Arome</td><td>138</td></tr>,
-    <tr><td>Quenya</td><td>138</td></tr>,
-    <tr><td>queta</td><td>138</td></tr>,
-    <tr><td>ū</td><td>144</td></tr>,
-    <tr><td>ún/unye</td><td>144</td></tr>,
-    <tr><td>əu</td><td>144</td></tr>,
-    <tr><td>al-</td><td>146</td></tr>,
-    <tr><td>alma</td><td>146</td></tr>,
-    <tr><td>andamacilba</td><td>147</td></tr>,
-    <tr><td>ar/ara/aran</td><td>147</td></tr>,
-    <tr><td>ar/ara/aran</td><td>147</td></tr>,
-    <tr><td>ari-</td><td>147</td></tr>,
-    <tr><td>ciryalíva</td><td>147</td></tr>,
-    <tr><td>Arda</td><td>150</td></tr>,
-    <tr><td>Arda Vanya</td><td>150</td></tr>,
-    <tr><td>Arda Úvana</td><td>150</td></tr>,
-    <tr><td>eldi</td><td>151</td></tr>,
-    <tr><td>eledā</td><td>152</td></tr>,
-    <tr><td>liss-</td><td>154</td></tr>,
-    <tr><td>hrúva</td><td>155</td></tr>,
-    <tr><td>Ingwi</td><td>155</td></tr>,
-    <tr><td>pole</td><td>155</td></tr>,
-    <tr><td>kombe</td><td>158</td></tr>,
-    <tr><td>okombe</td><td>158</td></tr>,
-    <tr><td>lerta[n]</td><td>160</td></tr>,
-    <tr><td>quete</td><td>160</td></tr>,
-    <tr><td>ma</td><td>162</td></tr>,
-    <tr><td>na</td><td>162</td></tr>,
-    <tr><td>yé</td><td>162</td></tr>,
-    <tr><td>á</td><td>162</td></tr>,
-    <tr><td>áva</td><td>162</td></tr>,
-    <tr><td>mār-</td><td>164</td></tr>,
-    <tr><td>at-</td><td>166</td></tr>,
-    <tr><td>nat</td><td>166</td></tr>,
-    <tr><td>nattire</td><td>166</td></tr>,
-    <tr><td>en</td><td>167</td></tr>,
-    <tr><td>nor-</td><td>168</td></tr>,
-    <tr><td>anel</td><td>170</td></tr>,
-    <tr><td>anon</td><td>170</td></tr>,
-    <tr><td>-el</td><td>170</td></tr>,
-    <tr><td>-en</td><td>170</td></tr>,
-    <tr><td>-ien</td><td>170</td></tr>,
-    <tr><td>-ion</td><td>170</td></tr>,
-    <tr><td>-on</td><td>170</td></tr>,
-    <tr><td>sel-de</td><td>170</td></tr>,
-    <tr><td>yon-do</td><td>170</td></tr>,
-    <tr><td>parna</td><td>171</td></tr>,
-    <tr><td>pende-</td><td>171</td></tr>,
-    <tr><td>al-</td><td>172</td></tr>,
-    <tr><td>arra</td><td>172</td></tr>,
-    <tr><td>asra</td><td>172</td></tr>,
-    <tr><td>asa-</td><td>172</td></tr>,
-    <tr><td>hra</td><td>172</td></tr>,
-    <tr><td>koainen</td><td>174</td></tr>,
-    <tr><td>fanya</td><td>174</td></tr>,
-    <tr><td>koainen</td><td>174</td></tr>,
-    <tr><td>Maiar</td><td>174</td></tr>,
-    <tr><td>quenderinwa</td><td>174</td></tr>,
-    <tr><td>Valar</td><td>174</td></tr>,
-    <tr><td>ar</td><td>175</td></tr>,
-    <tr><td>fanainen</td><td>175</td></tr>,
-    <tr><td>fantaner</td><td>175</td></tr>,
-    <tr><td>Maiar</td><td>175</td></tr>,
-    <tr><td>Maiaron</td><td>175</td></tr>,
-    <tr><td>nassentar</td><td>175</td></tr>,
-    <tr><td>quenderinwe</td><td>175</td></tr>,
-    <tr><td>Valar</td><td>175</td></tr>,
-    <tr><td>Valaron</td><td>175</td></tr>,
-    <tr><td>ve</td><td>175</td></tr>,
-    <tr><td>fana</td><td>176</td></tr>,
-    <tr><td>fanar</td><td>176</td></tr>,
-    <tr><td>fanta-</td><td>176</td></tr>,
-    <tr><td>koar</td><td>177</td></tr>,
-    <tr><td>emma</td><td>179</td></tr>,
-    <tr><td>fanar</td><td>179</td></tr>,
-    <tr><td>indemmar</td><td>179</td></tr>,
-    <tr><td>quanta</td><td>179</td></tr>,
-    <tr><td>nŏr</td><td>181</td></tr>,
-    <tr><td>nār-</td><td>183</td></tr>,
-    <tr><td>ruine</td><td>183</td></tr>,
-    <tr><td>-ea</td><td>186</td></tr>,
-    <tr><td>orwa</td><td>186</td></tr>,
-    <tr><td>taniquetil</td><td>186</td></tr>,
-    <tr><td>Elda</td><td>189</td></tr>,
-    <tr><td>Elwë</td><td>189</td></tr>,
-    <tr><td>waiwe</td><td>189</td></tr>,
-    <tr><td>iel</td><td>190</td></tr>,
-    <tr><td>Manwe</td><td>190</td></tr>,
-    <tr><td>-uell-</td><td>190</td></tr>,
-    <tr><td>vehte</td><td>190</td></tr>,
-    <tr><td>Voronwë</td><td>190</td></tr>,
-    <tr><td>wehte</td><td>190</td></tr>,
-    <tr><td>-wel</td><td>190</td></tr>,
-    <tr><td>-well-</td><td>190</td></tr>,
-    <tr><td>-wend-</td><td>190</td></tr>,
-    <tr><td>we’kā</td><td>190</td></tr>,
-    <tr><td>we’te</td><td>190</td></tr>,
-    <tr><td>-wē</td><td>190</td></tr>,
-    <tr><td>wista-</td><td>191</td></tr>,
-    for $ref in $PE17Q/*/ref
-    let $source := local:showPE17QSource($ref/@source)
-    let $source2 := substring-after($source, ':')
-    let $source3 := substring-after($source2, ':')
-    let $source4 := substring-after($source3, ':')
-    let $source5 := substring-after($source4, ':')
-    let $source6 := substring-after($source5, ':')
-    let $source7 := substring-after($source6, ':')
-    return (
-        if ($ref/@v != "") then <tr source="GR">
-            <td>{local:showPE17QRef($ref/@v)}</td>
-            <td>{$source}</td>
-        </tr> else (),
-        if ($ref/@v != "" and $source2) then <tr source="GR">
-            <td>{local:showPE17QRef($ref/@v)}</td>
-            <td>{replace(concat('0', $source2), '0([0-9][0-9][0-9])', '$1')}</td>
-        </tr> else (),
-        if ($ref/@v != "" and $source3) then <tr source="GR">
-            <td>{local:showPE17QRef($ref/@v)}</td>
-            <td>{replace(concat('0', $source3), '0([0-9][0-9][0-9])', '$1')}</td>
-        </tr> else (),
-        if ($ref/@v != "" and $source4) then <tr source="GR">
-            <td>{local:showPE17QRef($ref/@v)}</td>
-            <td>{replace(concat('0', $source4), '0([0-9][0-9][0-9])', '$1')}</td>
-        </tr> else (),
-        if ($ref/@v != "" and $source5) then <tr source="GR">
-            <td>{local:showPE17QRef($ref/@v)}</td>
-            <td>{replace(concat('0', $source5), '0([0-9][0-9][0-9])', '$1')}</td>
-        </tr> else (),
-        if ($ref/@v != "" and $source6) then <tr source="GR">
-            <td>{local:showPE17QRef($ref/@v)}</td>
-            <td>{replace(concat('0', $source6), '0([0-9][0-9][0-9])', '$1')}</td>
-        </tr> else (),
-        if ($ref/@v != "" and $source7) then <tr source="GR">
-            <td>{local:showPE17QRef($ref/@v)}</td>
-            <td>{replace(concat('0', $source7), '0([0-9][0-9][0-9])', '$1')}</td>
-        </tr> else (),
-        if ($ref/@du != "") then <tr source="GR">
-            <td>{local:showPE17QRef($ref/@du)}</td>
-            <td>{$source}</td>
-        </tr> else (),
-        if ($ref/@p1 != "") then <tr source="GR">
-            <td>{local:showPE17QRef($ref/@p1)}</td>
-            <td>{$source}</td>
-        </tr> else (),
-        if ($ref/@p2 != "") then <tr source="GR">
-            <td>{local:showPE17QRef($ref/@p2)}</td>
-            <td>{$source}</td>
-        </tr> else (),
-        if ($ref/@inf != "") then <tr source="GR">
-            <td>{local:showPE17QRef($ref/@inf)}</td>
-            <td>{$source}</td>
-        </tr> else ()
-    ) ) }
-    </table>
-let $refs := //ref[c:get-lang(.)='q' or c:get-lang(.)='mq']
-                  [starts-with(@source, 'PE17')]
-                  [not(c:get-speech(.)='phrase')]
-                  [not(c:get-speech(.)='grammar')]
-                  [not(starts-with(c:get-speech(.), 'phon'))]
-let $t2 :=
-    <table> { (
-    <tr><td>mátie</td><td>013</td></tr>,
-    <tr><td>elwe</td><td>013</td></tr>,
-    <tr><td>-lwa</td><td>014</td></tr>,
-    <tr><td>-mma</td><td>014</td></tr>,
-    <tr><td>-nwa</td><td>014</td></tr>,
-    <tr><td>omentielman</td><td>014</td></tr>,
-    <tr><td>omentielwa</td><td>014</td></tr>,
-    <tr><td>ommentiemman</td><td>014</td></tr>,
-    <tr><td>Númenor</td><td>015</td></tr>,
-    <tr><td>delw</td><td>017</td></tr>,
-    <tr><td>andú</td><td>018</td></tr>,
-    <tr><td>Elendil</td><td>018</td></tr>,
-    <tr><td>for-</td><td>018</td></tr>,
-    <tr><td>hró-</td><td>018</td></tr>,
-    <tr><td>hróme</td><td>018</td></tr>,
-    <tr><td>Hrónatan</td><td>018</td></tr>,
-    <tr><td>nú-</td><td>018</td></tr>,
-    <tr><td>Núnatan</td><td>018</td></tr>,
-    <tr><td>orró</td><td>018</td></tr>,
-    <tr><td>Varsi</td><td>022</td></tr>,
-    <tr><td>elen</td><td>023</td></tr>,
-    <tr><td>eldi</td><td>024-5</td></tr>,
-    <tr><td>wáya</td><td>034</td></tr>,
-    <tr><td>miríma</td><td>037</td></tr>,
-    <tr><td>aratá</td><td>039</td></tr>,
-    <tr><td>Ithil</td><td>039</td></tr>,
-    <tr><td>a</td><td>041</td></tr>,
-    <tr><td>al</td><td>041</td></tr>,
-    <tr><td>as</td><td>041</td></tr>,
-    <tr><td>teñwa</td><td>043</td></tr>,
-    <tr><td>teñwa</td><td>044</td></tr>,
-    <tr><td>-nya</td><td>046</td></tr>,
-    <tr><td>(malat-)</td><td>050-1</td></tr>,
-    <tr><td>-da</td><td>051-2</td></tr>,
-    <tr><td>-ta</td><td>051-2</td></tr>,
-    <tr><td>-ta</td><td>052</td></tr>,
-    <tr><td>Eleronde</td><td>056</td></tr>,
-    <tr><td>anmelda</td><td>057</td></tr>,
-    <tr><td>cari-</td><td>057</td></tr>,
-    <tr><td>ilyan</td><td>057</td></tr>,
-    <tr><td>ilyar</td><td>057</td></tr>,
-    <tr><td>-llatar</td><td>057</td></tr>,
-    <tr><td>-ltar(o)</td><td>057</td></tr>,
-    <tr><td>-n</td><td>057</td></tr>,
-    <tr><td>-s</td><td>057</td></tr>,
-    <tr><td>tári or tar</td><td>057</td></tr>,
-    <tr><td>lintierya</td><td>058</td></tr>,
-    <tr><td>ómetiend-</td><td>058</td></tr>,
-    <tr><td>linte</td><td>059</td></tr>,
-    <tr><td>-n</td><td>059</td></tr>,
-    <tr><td>Naldarielle</td><td>059-60</td></tr>,
-    <tr><td>-llor</td><td>062</td></tr>,
-    <tr><td>-nnar</td><td>062</td></tr>,
-    <tr><td>-sser</td><td>062</td></tr>,
-    <tr><td>aldar</td><td>063</td></tr>,
-    <tr><td>av</td><td>063</td></tr>,
-    <tr><td>oro</td><td>063</td></tr>,
-    <tr><td>oromar</td><td>063</td></tr>,
-    <tr><td>oronte</td><td>063</td></tr>,
-    <tr><td>oronye</td><td>063</td></tr>,
-    <tr><td>orto</td><td>063</td></tr>,
-    <tr><td>órta-</td><td>063</td></tr>,
-    <tr><td>órya</td><td>063</td></tr>,
-    <tr><td>Róme</td><td>063</td></tr>,
-    <tr><td>ambăr-</td><td>064</td></tr>,
-    <tr><td>miruvore</td><td>064</td></tr>,
-    <tr><td>núme</td><td>064</td></tr>,
-    <tr><td>Númenor</td><td>064</td></tr>,
-    <tr><td>Númenore</td><td>064</td></tr>,
-    <tr><td>Oiolosse</td><td>064</td></tr>,
-    <tr><td>Taniquetil</td><td>064</td></tr>,
-    <tr><td>tyalie</td><td>064</td></tr>,
-    <tr><td>Andune</td><td>065</td></tr>,
-    <tr><td>pala</td><td>065</td></tr>,
-    <tr><td>peltacse-</td><td>065</td></tr>,
-    <tr><td>queren</td><td>065</td></tr>,
-    <tr><td>-s</td><td>065</td></tr>,
-    <tr><td>-r</td><td>066</td></tr>,
-    <tr><td>airetári-lírinen</td><td>067</td></tr>,
-    <tr><td>eldi or analogical eleni</td><td>067</td></tr>,
-    <tr><td>-da</td><td>068</td></tr>,
-    <tr><td>-na</td><td>068</td></tr>,
-    <tr><td>-rya</td><td>069</td></tr>,
-    <tr><td>-t</td><td>069</td></tr>,
-    <tr><td>tar-</td><td>071</td></tr>,
-    <tr><td>Róme</td><td>074</td></tr>,
-    <tr><td>Vala</td><td>074</td></tr>,
-    <tr><td>Valar</td><td>074</td></tr>,
-    <tr><td>máryat</td><td>076</td></tr>,
-    <tr><td>tancantealye</td><td>076</td></tr>,
-    <tr><td>Tarquesta</td><td>076</td></tr>,
-    <tr><td>ómarya</td><td>076</td></tr>,
-    <tr><td>nacant</td><td>077</td></tr>,
-    <tr><td>nanci-</td><td>077</td></tr>,
-    <tr><td>ronye</td><td>077</td></tr>,
-    <tr><td>malinorne</td><td>080</td></tr>,
-    <tr><td>malinorneli</td><td>080</td></tr>,
-    <tr><td>tháne-</td><td>081</td></tr>,
-    <tr><td>walass</td><td>084</td></tr>,
-    <tr><td>lange</td><td>091</td></tr>,
-    <tr><td>lango</td><td>091</td></tr>,
-    <tr><td>sen</td><td>091</td></tr>,
-    <tr><td>Andúne</td><td>092</td></tr>,
-    <tr><td>Calacirya</td><td>092</td></tr>,
-    <tr><td>Oiolosse</td><td>092</td></tr>,
-    <tr><td>-ta</td><td>093</td></tr>,
-    <tr><td>ricir</td><td>093</td></tr>,
-    <tr><td>enc-</td><td>095</td></tr>,
-    <tr><td>lepen</td><td>095</td></tr>,
-    <tr><td>otso</td><td>095</td></tr>,
-    <tr><td>ale</td><td>100</td></tr>,
-    <tr><td>ne</td><td>100</td></tr>,
-    <tr><td>nes-</td><td>100</td></tr>,
-    <tr><td>Atani</td><td>101</td></tr>,
-    <tr><td>Cormacolindo</td><td>103</td></tr>,
-    <tr><td>sundóma</td><td>104</td></tr>,
-    <tr><td>-da</td><td>106</td></tr>,
-    <tr><td>-mar</td><td>106</td></tr>,
-    <tr><td>yulda</td><td>106</td></tr>,
-    <tr><td>cauma</td><td>107</td></tr>,
-    <tr><td>-ma</td><td>108</td></tr>,
-    <tr><td>vanima</td><td>111</td></tr>,
-    <tr><td>vanimali</td><td>111</td></tr>,
-    <tr><td>ítaril</td><td>112</td></tr>,
-    <tr><td>Ñorofinwe</td><td>112</td></tr>,
-    <tr><td>cáno</td><td>113</td></tr>,
-    <tr><td>Finican</td><td>113</td></tr>,
-    <tr><td>Finicáno</td><td>113</td></tr>,
-    <tr><td>Finwion</td><td>113</td></tr>,
-    <tr><td>Finúcano</td><td>113</td></tr>,
-    <tr><td>Ingoldo</td><td>113</td></tr>,
-    <tr><td>-orna</td><td>113</td></tr>,
-    <tr><td>Turucán</td><td>113</td></tr>,
-    <tr><td>Turucáno</td><td>113</td></tr>,
-    <tr><td>Ñolotar</td><td>113</td></tr>,
-    <tr><td>melec-</td><td>115</td></tr>,
-    <tr><td>polna</td><td>115</td></tr>,
-    <tr><td>Arató</td><td>117</td></tr>,
-    <tr><td>Artanil</td><td>117</td></tr>,
-    <tr><td>Arto</td><td>117</td></tr>,
-    <tr><td>Artor</td><td>117</td></tr>,
-    <tr><td>Artó</td><td>117</td></tr>,
-    <tr><td>Feanór</td><td>117</td></tr>,
-    <tr><td>Fingoldo</td><td>117</td></tr>,
-    <tr><td>Finicáno</td><td>117</td></tr>,
-    <tr><td>Finwe</td><td>117</td></tr>,
-    <tr><td>Ingoldo</td><td>117</td></tr>,
-    <tr><td>Nilarto</td><td>117</td></tr>,
-    <tr><td>Ingoldo Finwe</td><td>118</td></tr>,
-    <tr><td>Fin-</td><td>119</td></tr>,
-    <tr><td>Ancalo</td><td>126</td></tr>,
-    <tr><td>Sindarin</td><td>126</td></tr>,
-    <tr><td>an sí</td><td>127</td></tr>,
-    <tr><td>Avari</td><td>127</td></tr>,
-    <tr><td>Eldar</td><td>127</td></tr>,
-    <tr><td>Linder</td><td>127</td></tr>,
-    <tr><td>Quenya</td><td>127</td></tr>,
-    <tr><td>Tuna</td><td>128</td></tr>,
-    <tr><td>Túna</td><td>128</td></tr>,
-    <tr><td>Noldorin</td><td>129</td></tr>,
-    <tr><td>-s</td><td>129</td></tr>,
-    <tr><td>Sindarin</td><td>129</td></tr>,
-    <tr><td>Vanyarin</td><td>129</td></tr>,
-    <tr><td>ve</td><td>130</td></tr>,
-    <tr><td>we</td><td>130</td></tr>,
-    <tr><td>wi</td><td>130</td></tr>,
-    <tr><td>-yat</td><td>130</td></tr>,
-    <tr><td>ómëo</td><td>130</td></tr>,
-    <tr><td>aldarembina</td><td>135</td></tr>,
-    <tr><td>aldaron</td><td>135</td></tr>,
-    <tr><td>etye</td><td>135</td></tr>,
-    <tr><td>-lye</td><td>135</td></tr>,
-    <tr><td>ráma</td><td>135</td></tr>,
-    <tr><td>-tye</td><td>135</td></tr>,
-    <tr><td>quenda</td><td>137</td></tr>,
-    <tr><td>lende</td><td>139</td></tr>,
-    <tr><td>Nandor</td><td>139</td></tr>,
-    <tr><td>Quende</td><td>139</td></tr>,
-    <tr><td>Nandor</td><td>139</td></tr>,
-    <tr><td>Quende</td><td>139</td></tr>,
-    <tr><td>Noldor</td><td>140</td></tr>,
-    <tr><td>Avamanyar</td><td>143</td></tr>,
-    <tr><td>vá-</td><td>143</td></tr>,
-    <tr><td>wanwa</td><td>143</td></tr>,
-    <tr><td>áva</td><td>143</td></tr>,
-    <tr><td>Úamanyar</td><td>143</td></tr>,
-    <tr><td>vanima</td><td>144</td></tr>,
-    <tr><td>úvanima</td><td>144</td></tr>,
-    <tr><td>únotima</td><td>144</td></tr>,
-    <tr><td>aina</td><td>146</td></tr>,
-    <tr><td>lintaciryalíva</td><td>147</td></tr>,
-    <tr><td>nin</td><td>147</td></tr>,
-    <tr><td>-wa</td><td>147</td></tr>,
-    <tr><td>ascalaste</td><td>148</td></tr>,
-    <tr><td>auri-</td><td>148</td></tr>,
-    <tr><td>Máyar</td><td>149</td></tr>,
-    <tr><td>Valie</td><td>149</td></tr>,
-    <tr><td>áyan</td><td>149</td></tr>,
-    <tr><td>charina</td><td>150</td></tr>,
-    <tr><td>Mindi</td><td>150</td></tr>,
-    <tr><td>wanya</td><td>150</td></tr>,
-    <tr><td>úcharin</td><td>150</td></tr>,
-    <tr><td>Amandil</td><td>152</td></tr>,
-    <tr><td>Cuiviénen</td><td>152</td></tr>,
-    <tr><td>Valandil</td><td>152</td></tr>,
-    <tr><td>walca</td><td>154</td></tr>,
-    <tr><td>hróva</td><td>155</td></tr>,
-    <tr><td>incánu</td><td>155</td></tr>,
-    <tr><td>cente</td><td>156</td></tr>,
-    <tr><td>combe</td><td>157</td></tr>,
-    <tr><td>lauré-</td><td>159</td></tr>,
-    <tr><td>lawar</td><td>159</td></tr>,
-    <tr><td>lerta</td><td>160</td></tr>,
-    <tr><td>lossi-</td><td>161</td></tr>,
-    <tr><td>lossé-</td><td>161</td></tr>,
-    <tr><td>-nta-ntat</td><td>161</td></tr>,
-    <tr><td>-nte</td><td>161</td></tr>,
-    <tr><td>ava márie</td><td>162</td></tr>,
-    <tr><td>lungamaite</td><td>162</td></tr>,
-    <tr><td>Ea</td><td>163</td></tr>,
-    <tr><td>umbar</td><td>164</td></tr>,
-    <tr><td>míri</td><td>165</td></tr>,
-    <tr><td>míri</td><td>165</td></tr>,
-    <tr><td>van-</td><td>165</td></tr>,
-    <tr><td>wan-</td><td>165</td></tr>,
-    <tr><td>atquet</td><td>166</td></tr>,
-    <tr><td>nacca</td><td>166</td></tr>,
-    <tr><td>otya</td><td>166</td></tr>,
-    <tr><td>enda</td><td>167</td></tr>,
-    <tr><td>néna</td><td>167</td></tr>,
-    <tr><td>nén-talma</td><td>167</td></tr>,
-    <tr><td>-r</td><td>167</td></tr>,
-    <tr><td>hir</td><td>168</td></tr>,
-    <tr><td>ninqui-</td><td>168</td></tr>,
-    <tr><td>-nya</td><td>170</td></tr>,
-    <tr><td>Manwe</td><td>174</td></tr>,
-    <tr><td>Taniquetil</td><td>174</td></tr>,
-    <tr><td>Varda</td><td>174</td></tr>,
-    <tr><td>canta</td><td>175</td></tr>,
-    <tr><td>cenima</td><td>175</td></tr>,
-    <tr><td>coa</td><td>175</td></tr>,
-    <tr><td>larma</td><td>175</td></tr>,
-    <tr><td>nasse</td><td>175</td></tr>,
-    <tr><td>Oiolosse</td><td>175</td></tr>,
-    <tr><td>Elentári</td><td>176</td></tr>,
-    <tr><td>Elwe</td><td>176</td></tr>,
-    <tr><td>indemma</td><td>176</td></tr>,
-    <tr><td>Nahar</td><td>176</td></tr>,
-    <tr><td>Orome</td><td>176</td></tr>,
-    <tr><td>Sindicollo</td><td>176</td></tr>,
-    <tr><td>Valaróma</td><td>176</td></tr>,
-    <tr><td>Arda</td><td>177</td></tr>,
-    <tr><td>Ea</td><td>177</td></tr>,
-    <tr><td>Ulmo</td><td>177</td></tr>,
-    <tr><td>Yavanna</td><td>177</td></tr>,
-    <tr><td>Ainu</td><td>178</td></tr>,
-    <tr><td>quanta emma</td><td>179</td></tr>,
-    <tr><td>indemma</td><td>179</td></tr>,
-    <tr><td>afánie</td><td>180</td></tr>,
-    <tr><td>Arda</td><td>180</td></tr>,
-    <tr><td>fanar</td><td>180</td></tr>,
-    <tr><td>fantane</td><td>180</td></tr>,
-    <tr><td>Maia</td><td>180</td></tr>,
-    <tr><td>Maiar</td><td>180</td></tr>,
-    <tr><td>Olórin</td><td>180</td></tr>,
-    <tr><td>ñorsús-</td><td>183</td></tr>,
-    <tr><td>Sauron</td><td>184</td></tr>,
-    <tr><td>taran</td><td>186</td></tr>,
-    <tr><td>cáza</td><td>188</td></tr>,
-    <tr><td>inno</td><td>189</td></tr>,
-    <tr><td>nóre</td><td>189</td></tr>,
-    <tr><td>ín</td><td>189</td></tr>,
-    <tr><td>Altariel</td><td>190</td></tr>,
-    <tr><td>Eruhíni</td><td>190</td></tr>,
-    <tr><td>-n</td><td>190</td></tr>,
-    <tr><td>Tindómiel</td><td>190</td></tr>,
-    <tr><td>yé</td><td>190</td></tr>,
-    <tr><td>yó</td><td>190</td></tr>,
-    for $ref in $refs
-    return (
-        <tr source="{$ref/@source}">
-            <td>{translate($ref/@v/string(), '´!̆', '’')}</td>
-            <td>{substring-after(substring-before($ref/@source, '.'), '/')}</td>
-        </tr>,
-        if ($ref/deriv/@i1) then <tr source="{$ref/@source}">
-            <td>{translate($ref/deriv/@i1/string(), '´!̆', '’')}</td>
-            <td>{substring-after(substring-before($ref/@source, '.'), '/')}</td>
-        </tr> else (),
-        if ($ref/deriv/@i2) then <tr source="{$ref/@source}">
-            <td>{translate($ref/deriv/@i2/string(), '´!̆', '’')}</td>
-            <td>{substring-after(substring-before($ref/@source, '.'), '/')}</td>
-        </tr> else ()
-    )
-    ) } </table>
-let $t1id := <table> {
-    for $row in $t1/tr
-    return
-        <tr id="{local:rowId($row)}" source="{$row/@source}">
-            <td>{$row/td[1]/string()}</td>
-            <td>{$row/td[2]/string()}</td>
-        </tr>
-    }</table>
-let $t2id := <table> {(
-    for $row in $t2/tr
-    return
-        <tr id="{local:rowId($row)}" source="{$row/@source}">
-            <td>{$row/td[1]/string()}</td>
-            <td>{$row/td[2]/string()}</td>
-        </tr>
-    )}</table>
-let $joined := $t1id | $t2id
-let $t3 :=
-    <table> {(
-    for $rowId in distinct-values($joined/tr/@id)
-    let $t1row := $t1id/tr[@id = $rowId][1]
-    let $t2row := $t2id/tr[@id = $rowId][1]
-    order by $rowId
-    return
-        <tr> {(
-            if ($t1row/@source = '') then <td bgcolor="black"></td> else 
-                if ($t1row) then <td>{$t1row/td[1]/string()}</td>
-                else <td bgcolor="yellow"></td>,
-            if ($t1row/@source = '') then <td bgcolor="black"></td> else 
-                if ($t1row) then <td>PE17:{substring-before(concat($t1row/td[2]/string(), ':'), ':')}</td>
-                else <td bgcolor="yellow"></td>,
-            if ($t2row/@source = '') then <td bgcolor="black"></td> else 
-                if ($t2row) then <td>{$t2row/td[1]/string()}</td>
-                else <td bgcolor="yellow"></td>,
-            if ($t2row/@source = '') then <td bgcolor="black"></td> else 
-                if ($t2row) then <td><a href="../references/ref-PE17.html#{$t2row/@source}">PE17:{$t2row/td[2]/string()}</a></td>
-                else <td bgcolor="yellow"></td>
-        )} </tr>
-    )}</table>
-return $t3
-}
-</body>
-</html>
-:)
-
-(:
-
-<html>
-<body> {
-let $refs := //ref[c:get-lang(.)='n'][contains(@v, 'ea')]
-return (
-    <p><u>{count($refs)}</u></p>,
-    let $control := <control show-lang="y" show-link="parent"/>
-    for $ref in $refs
-    let $word := $ref/..
-    order by $word/c:get-lang(.), $word/c:normalize-for-sort(@v) 
-    return
-        <p>
-            {c:print-word($word, $control)}
-        </p>
-) }
-</body>
-</html>
-:)
-
-(:
-
-<html>
-<body> {
-for $ref in //ref[example|example-deriv|example-inflect][not(c:get-ref(.))]
-return <p>{$ref/@source/string()}</p>
-} </body>
-</html>
-
-<html>
-<body> {
-for $word in xdb:key(/*, 'language', 'q')[c:get-speech(.)='adj'][ref/inflect] return
-<p>{$word/@v/string()}</p>
-} </body>
-</html>
-:)

@@ -3,9 +3,11 @@ package xdb.dom;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -23,6 +25,7 @@ import org.xml.sax.InputSource;
 
 import xdb.dom.impl.DocumentImpl;
 import xdb.dom.impl.NodeImpl;
+import xdb.util.XmlUtil;
 
 /**
  * Custom functions for XQuery/XPath/XSLT integration.
@@ -30,6 +33,12 @@ import xdb.dom.impl.NodeImpl;
  * @author Paul Strack
  */
 public final class CustomFunctions {
+
+    private static volatile Map<String, String> hashcodeMap = Collections.emptyMap();
+
+    public static void setHashcodeMap(Map<String, String> hashcodeMap) {
+        CustomFunctions.hashcodeMap = hashcodeMap;
+    }
 
     private CustomFunctions() {
     }
@@ -362,7 +371,8 @@ public final class CustomFunctions {
             doc = db.parse(new InputSource(new StringReader("<root>" + html + "</root>")));
         } catch (Exception e) {
             try {
-                doc = db.parse(new InputSource(new StringReader("<root>ERROR:BAD_HTML - " + e + "</root>")));
+                String msg = XmlUtil.xmlEscape(e.toString());
+                doc = db.parse(new InputSource(new StringReader("<root>ERROR:BAD_HTML - " + msg + "</root>")));
             } catch (Exception e1) {
                 return new ArrayList<Node>();
             }
@@ -421,7 +431,16 @@ public final class CustomFunctions {
     }
 
     private static String hashcode(String lang, String value) {
-        value = lang + "::" + value;
+        String hashKey = hashKey(lang, value);
+        String code = hashcodeMap.get(hashKey);
+        return (code != null) ? code : hashValue(hashKey);
+    }
+
+    public static String hashKey(String lang, String value) {
+        return lang + "::" + value;
+    }
+
+    public static String hashValue(String value) {
         char[] chars = value.toCharArray();
         Arrays.sort(chars);
         String sort = new String(chars);

@@ -2,8 +2,8 @@ module namespace c="common.xq";
 
 declare function c:normalize-for-sort($value as xs:string?) as xs:string {
     let $w0 := replace(replace($value, 'yá²', 'yá%²'), 'yá¹', 'yá%¹')
-    let $w1 := translate(lower-case($w0), 'χƕıǝçƀɟḷḹẏýṣṃṇṛṝñŋᴬᴱᴵᴼᵁáéíóúäëïöüāēīōūâêîôûăĕĭŏŭæǣǭχřš¹²³⁴⁵⁶⁷⁸⁹ .?-–·‘’[]{}()!̆,`¯̯̥́̄̂', 
-                                             'hhiecbjllyysmnrrnnaeiouaeiouaeiouaeiouaeiouaeiouaeoxrs123456789')
+    let $w1 := translate(lower-case($w0), 'χƕıǝçƀɟḷḹẏýṣṃṇṛṝñŋᴬᴱᴵᴼᵁáéíóúäëïöüāēīōūâêîôûŷăĕĭŏŭãæǣǭęχřš¹²³⁴⁵⁶⁷⁸⁹ .?-–~·‘’[]{}()!̆,`¯̯̥́̄̂', 
+                                          'hhiecbjllyysmnrrnnaeiouaeiouaeiouaeiouaeiouyaeiouaaeoexrs123456789')
     let $w2 := replace($w1, 'ð', 'dzz')
     let $w3 := replace($w2, 'þ', 'tzz')
     let $w4 := replace($w3, 'θ', 'tzz')
@@ -30,6 +30,11 @@ declare function c:derive-css($word as element()?) as xs:string {
 
 (: gloss :)
 
+declare function c:get-neo-gloss($word as element()?) as xs:string? {
+    if ($word/@ngloss) then $word/@ngloss/string()
+    else c:get-gloss($word)
+};
+
 declare function c:get-gloss($word as element()?) as xs:string? {
     let $gloss :=
         if ($word/@gloss) then $word/@gloss/string()
@@ -47,9 +52,18 @@ declare function c:get-gloss($word as element()?) as xs:string? {
     return $gloss
 };
 
+declare function c:print-neo-gloss($word as element()?) as node()* {
+    let $gloss := c:get-neo-gloss($word)
+    let $css := () (: c:derive-css($word) :)
+    return
+        if ($gloss and $css) then (text{' “'}, <span class="{$css}">{$gloss}</span>, text{'”'})
+        else if ($gloss) then text{concat(' “', $gloss, '”')}
+        else ()
+};
+
 declare function c:print-gloss($word as element()?) as node()* {
     let $gloss := c:get-gloss($word)
-    let $css := c:derive-css($word)
+    let $css := () (: c:derive-css($word) :)
     return
         if ($gloss and $css) then (text{' “'}, <span class="{$css}">{$gloss}</span>, text{'”'})
         else if ($gloss) then text{concat(' “', $gloss, '”')}
@@ -67,20 +81,6 @@ declare function c:print-gloss-no-space($word as element()?) as node()? {
 
 (: lang :)
 
-declare function c:get-lang-strata($ref as element()?) as xs:string* {
-    let $lang := c:get-lang($ref) return
-    if ($lang = ('p', 'q', 's', 'os', 'ns', 'ln', 'lon', 'nan', 't', 'val')) then ('p', 'q', 's', 'os', 'ns', 'ln', 'lon', 'nan', 't', 'val')
-    else if ($lang = ('mp', 'mq', 'n', 'ilk', 'dor', 'dan', 'mt')) then ('mp', 'mq', 'n', 'ilk', 'dor', 'dan', 'mt')
-    else if ($lang = ('ep', 'eq', 'en', 'eon', 'eoq', 'g', 'sol', 'et', 'eilk')) then ('ep', 'eq', 'en', 'eon', 'eoq', 'g', 'sol', 'et', 'eilk')
-    else ($lang)
-};
-
-declare function c:get-deriv-lang($ref as element()?) as xs:string* {
-    let $lang := c:get-lang($ref) return
-    if ($lang = ('mp', 'er', 'ep')) then c:get-lang-strata($ref)
-    else $lang
-};
-
 declare function c:get-lang($ref as element()*) as xs:string? {
     $ref/ancestor-or-self::*[@l][1]/@l/string()
 };
@@ -91,7 +91,32 @@ declare function c:get-langs($ref as element()*) as xs:string* {
 
 declare function c:is-primitive($ref as element()*) as xs:boolean {
     let $lang := c:get-lang($ref) return
-    $lang = ('p', 'mp', 'ep')
+    $lang = ('p', 'mp', 'ep', 'np')
+};
+
+declare function c:is-neo($ref as element()*) as xs:boolean {
+    let $lang := c:get-lang($ref) return
+    $lang = ('ns', 'nq', 'np')
+};
+
+declare function c:is-neo-lang($ref as element()*) as xs:boolean {
+    let $lang := c:get-lang($ref) return
+    $lang = ('nq', 'q', 'mq', 'eq', 'ns', 's', 'n', 'en', 'g', 'np', 'p', 'mp', 'ep')
+};
+
+declare function c:get-neo-lang($ref as element()*) as xs:string {
+    let $lang := c:get-lang($ref) return
+    if ($lang = ('nq', 'q', 'mq', 'eq')) then 'nq'
+    else if ($lang = ('ns', 's', 'n', 'en', 'g')) then 'ns'
+    else if ($lang = ('np', 'p', 'mp', 'ep')) then 'np'
+    else ''
+};
+
+declare function c:get-neo-lang-group($lang as xs:string) as xs:string* {
+    if ($lang = 'nq') then ('nq', 'q', 'mq', 'eq')
+    else if ($lang = 'ns') then ('ns', 's', 'n', 'en', 'g')
+    else if ($lang = 'np') then ('ns', 's', 'n', 'en', 'g')
+    else $lang
 };
 
 declare function c:is-root($ref as element()*) as xs:boolean {
@@ -110,10 +135,16 @@ declare function c:convert-lang($lang as xs:string?) as xs:string {
         then 'ᴹ✶'
     else if ($lang='ep')
         then 'ᴱ✶'
+    else if ($lang='np')
+        then 'ᴺ✶'
     else if ($lang='mq')
         then 'ᴹQ. '
+    else if ($lang='nq')
+        then 'ᴺQ. '
     else if ($lang='mt')
         then 'ᴹT. '
+    else if ($lang='ns')
+        then 'ᴺS. '
     else if ($lang='ln')
         then 'ᴸN. '
     else if ($lang='lon')
@@ -144,6 +175,8 @@ declare function c:convert-lang($lang as xs:string?) as xs:string {
         then 'Av. '
     else if ($lang='un')
         then 'Un. '
+    else if ($lang='norths')
+        then 'North S. '
     else if (string-length($lang) = 1 or string-length($lang) = 2)
         then concat(upper-case($lang), '. ')
     else
@@ -157,16 +190,40 @@ declare function c:print-lang($ref as element()?) as xs:string {
     return if ($speech = 'root') then translate($converted, '✶', '√') else $converted
 };
 
+declare function c:print-lang2($ref as element()?) as xs:string {
+    translate(c:print-lang($ref), ' ', '')
+};
+
+declare function c:lang-words($root as element(), $id) as element()* {
+    if ($id = 'nq') then
+        (xdb:key($root, 'language', 'nq') | xdb:key($root, 'language', 'q') | xdb:key($root, 'language', 'mq') | xdb:key($root, 'language', 'eq'))
+        [not(combine)]
+        (: [starts-with(c:normalize-spelling(lower-case(c:normalize-for-sort(@v))), 'ah')] :)
+    else if ($id = 'ns') then
+        (xdb:key($root, 'language', 'ns') | xdb:key($root, 'language', 's') | xdb:key($root, 'language', 'n') | xdb:key($root, 'language', 'en') | xdb:key($root, 'language', 'g'))
+        [not(combine)]
+    else if ($id = 'np') then 
+        (xdb:key($root, 'language', 'np') | xdb:key($root, 'language', 'p') | xdb:key($root, 'language', 'mp') | xdb:key($root, 'language', 'ep'))
+        [not(combine)]
+    else xdb:key($root, 'language', $id)
+};
+
 (: source :)
 
 declare function c:print-source($ref as element()?) as xs:string {
-    substring-before(replace(replace(concat($ref/@source, '.'), '/0', '/'), '/0', '/'), '.')
+    c:short-ref($ref/@source)
 };
 
-declare function c:print-source-link($ref as element()) as element() {
+declare function c:short-ref($source) as xs:string {
+    $source/replace(replace(substring-before(concat(., '.'), '.'), '/0', '/'), '/0', '/')
+};
+
+declare function c:print-source-link($ref as element(), $short-mode as xs:boolean) as element() {
     let $link := concat('../references/ref-', substring-before($ref/@source, '/'), '.html#', $ref/@source)
     let $src := c:print-full-source($ref)
-    return <a href="{$link}" style="color: black">{$src}</a>
+    return <a href="{$link}" style="color: black">{
+        if ($short-mode) then c:print-source($ref) else c:print-full-source($ref)
+    }</a>
 };
 
 declare function c:print-sources($refs as element()*) as xs:string {
@@ -219,7 +276,11 @@ declare function c:print-speech($ref as element()?) as element()? {
 declare function c:display-speech($ref as element()?) as xs:string? {
     let $speech := c:get-speech($ref)
     let $display :=
-        if ($speech='masc-name') then ' m.'
+        if (contains($speech, ' ')) then
+            let $a := tokenize($speech, '\s')
+            let $r := string-join($a, '. and ')
+            return concat(' ', $r, '.')
+        else if ($speech='masc-name') then ' m.'
         else if ($speech='fem-name') then ' f.'
         else if ($speech='place-name') then ' loc.'
         else if ($speech='collective-name') then ' coll.'
@@ -233,17 +294,6 @@ declare function c:display-speech($ref as element()?) as xs:string? {
         else if ($speech='phonetic-group') then ''
         else if ($speech='phoneme') then ''
         else if ($speech='phonetic-rule') then ''
-        else if ($speech='adj n') then ' adj. and n.'
-        else if ($speech='adv n') then ' adv. and n.'
-        else if ($speech='n adj') then ' n. and adj.'
-        else if ($speech='n adv') then ' n. and adv.'
-        else if ($speech='adj adv') then ' adj. and adv.'
-        else if ($speech='adv adj') then ' adv. and adj.'
-        else if ($speech='adv conj') then ' adv. and conj.'
-        else if ($speech='prep pref') then ' prep. and pref.'
-        else if ($speech='prep adv') then ' prep. and adv.'
-        else if ($speech='adv interj') then ' adv. and interj.'
-        else if ($speech='pron conj') then ' pron. and conj.'
         else if (ends-with($speech, '?')) then concat(' ', $speech)
         else concat(' ', $speech, '.')
     return $display
@@ -271,9 +321,9 @@ declare function c:print-wordlet($ref as attribute()?, $postfix as xs:string) as
         let $end := if ($has-brackets) then text {']'} else ()
         return
             if (starts-with($ref/../../@mark, '-')) then
-                (<strike>{($start, if ($has-brackets) then text{$word-text} else <i>{$word-text}</i>, $end)}</strike>, text{$postfix})
+                (<span class="deleted">{($start, if ($has-brackets) then text{$word-text} else <i>{$word-text}</i>, $end)}</span>, text{$postfix})
             else if (starts-with($ref/../../@mark, '|')) then
-                (<u>{($start, if ($has-brackets) then text{$word-text} else <i>{$word-text}</i>, $end)}</u>, text{$postfix})
+                (<span class="deleted-section">{($start, if ($has-brackets) then text{$word-text} else <i>{$word-text}</i>, $end)}</span>, text{$postfix})
             else
                 ($start, if ($has-brackets) then text{$word-text} else <i>{$word-text}</i>, $end, text{$postfix})
     else ()
@@ -288,13 +338,16 @@ declare function c:print-link-to-word($ref as element(), $text) as element() {
     if (starts-with($ref/@v, 'ø')) then <span>{$text}</span> else
     if ($ref/@v='?' or $ref/@rule='?') then <span> ? </span> else
     if (not($word)) then <span> !!! </span> else
-    <a title="{c:print-lang($word)}({string($word/@order)}) {string($word/@v)}" href="{concat('../words/word-', xdb:hashcode($word), '.html')}">{$text}</a>
+    <a title="{c:print-lang($word)}({string($word/@order)}) {string($word/@v)}" href="{c:to-word-link($word)}">{$text}</a>
 };
 
 declare function c:print-word($word as element()?, $control as element()?) as node()* {
     let $show-lang := $control/@show-lang
     let $show-link := $control/@show-link
+    let $show-gloss := $control/@show-gloss
     let $hide-mark := $control/@hide-mark
+    let $normalize := $control/@normalize
+    let $is-neo := $control/@is-neo
     let $style := $control/@style
     let $has-brackets := c:has-brackets($word)
     return
@@ -307,31 +360,60 @@ declare function c:print-word($word as element()?, $control as element()?) as no
         if (not($show-link)) then
             ()
         else if ($show-link = 'parent') then
-            concat('../words/word-', xdb:hashcode($word/ancestor-or-self::word[1]), '.html')
+            c:to-word-link($word/ancestor-or-self::word[1])
         else if (name($word) = 'ref') then 
             concat('../references/ref-', substring-before($word/@source, '/'), '.html#', $word/@source)
         else
-            concat('../words/word-', xdb:hashcode($word), '.html')
-    let $value := $word/@v/string()
+            c:to-word-link($word)
+    let $value := if ($normalize = 'true')
+        then c:normalize-spelling($word/@v/string())
+        else $word/@v/string()
     return (
         if (not($hide-mark) and c:is-primitive($word)) then text {$word/translate(@mark, '-|', '')} else (),
         if ($show-lang) then text {c:print-lang($word)} else (),
         if (not($hide-mark) and not(c:is-primitive($word))) then text {$word/translate(@mark, '-|', '')} else (),
-        <span class="{$css}">{
-            if ($link) then <a href="{$link}">{$value}</a>
-            else $value
-        }</span>
+        (
+            <span class="{$css}">{
+                if ($link) then <a href="{$link}">{$value}</a>
+                else $value
+            }</span>,
+            if ($show-gloss and $is-neo) then c:print-neo-gloss($word)
+            else if ($show-gloss) then c:print-gloss($word) else ()
+        )
     )
+};
+
+declare function c:normalize-spelling($value) as xs:string {
+    let $v1 := translate(replace(replace(replace($value, 'q', 'qu'), 'quu', 'qu'), 'ks', 'x'), 'k', 'c')
+    let $v2 := replace($v1, 'ea', 'ëa')
+    let $v3 := if ($v2 = 'nye' or $v2 = 'lye') then $v2
+        else if (string-length(translate($v2, '¹²³⁴', '')) < 3) then $v2
+        else if (ends-with($v2, 'e')) then concat(substring($v2, 1, string-length($v2) - 1), 'ë')
+        else if (ends-with($v2, 'e)')) then concat(substring($v2, 1, string-length($v2) - 2), 'ë)')
+        else if (ends-with($v2, 'e¹')) then concat(substring($v2, 1, string-length($v2) - 2), 'ë¹')
+        else if (ends-with($v2, 'e²')) then concat(substring($v2, 1, string-length($v2) - 2), 'ë²')
+        else if (ends-with($v2, 'e³')) then concat(substring($v2, 1, string-length($v2) - 2), 'ë³')
+        else if (ends-with($v2, 'e⁴')) then concat(substring($v2, 1, string-length($v2) - 2), 'ë⁴')
+        else $v2
+    return $v3
+};
+
+declare function c:to-word-link($word) as xs:string {
+    concat('../words/word-', xdb:hashcode($word), '.html')
+    (: concat('../entries/entry-', c:get-lang($word), '-', translate($word/@v, ' ', '_'), '.html') :)
+};
+
+declare function c:word-lookup($root as element()?, $l, $v) as element()* {
+    let $generic-words := $root/xdb:key($root, 'word', $v)
+    return $generic-words[c:get-lang(.) = $l]
 };
 
 declare function c:get-word($ref as element()?) as element()* {
     let $ref-lang := c:get-lang($ref)
     let $generic-words := $ref/xdb:key($ref, 'word', $ref/@v)
-    let $in-strata-words := $generic-words[c:get-lang(.) = c:get-lang-strata($ref)]
     let $words :=
         if ($ref/@l) then $generic-words[c:get-lang(.) = $ref-lang]
         else if (count($generic-words) = 1) then $generic-words
-        else if (count($in-strata-words) = 1) then $generic-words[c:get-lang(.) = c:get-lang-strata($ref)]
         else $generic-words[c:get-lang(.) = $ref-lang]
     return $words
 };
@@ -412,8 +494,7 @@ declare function c:show-hierarchy-list($items as element()*, $grouping as xs:str
 };
 
 declare function c:alt-lang($word as element()) as xs:string {
-    let $alt := $word[not($word/ref)][not(starts-with(@speech, 'phon') or @speech='grammar')]//word[ref][@l][@l != $word/@l] |
-                $word[not($word/ref)][not(starts-with(@speech, 'phon') or @speech='grammar')]/word[1][@l][@l != $word/@l]
+    let $alt := $word[not(@mark='!')][not($word/ref)][not(starts-with(@speech, 'phon') or @speech='grammar' or @speech='text')]//word[ref][1][@l][@l != $word/@l]
     return if ($alt)
     then translate(c:print-lang($alt[1]), ' ', '')
     else ''

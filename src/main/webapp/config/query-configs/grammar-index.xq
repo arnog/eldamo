@@ -8,16 +8,18 @@ declare variable $secondary-word := <control show-link="y"/>;
 
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"></meta><meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1"></meta>
 <title>Eldamo : {$lang-name} Grammar</title>
 <link type="text/css" rel="stylesheet" href="../../css/global.css" />
 </head>
 <body>
-<p>
+<div id="nav-block" class="nav-block">
     [<a href="../../index.html">Home</a>] »
-    [<a href="../languages/index.html">Languages</a>] »
-    [<a href="../language-pages/lang-{$id}.html">{$lang-name}</a>]
-</p>
+<span class="breadcrumb-nav">
+    <a href="../languages/index.html">Languages</a> »&#160;
+</span>
+    <a href="../language-pages/lang-{$id}.html">{$lang-name}</a>
+</div>
 <hr/>
 <h1>{$lang-name} Grammar</h1>
 {xdb:html($lang/grammar/string())}

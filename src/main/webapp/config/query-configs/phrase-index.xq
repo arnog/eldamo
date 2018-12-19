@@ -15,9 +15,9 @@ declare function local:print-phrase($word as element()) as element() {
         { c:print-word($word, $primary-word) }
         { text {' '} }
         { c:print-gloss($word) }
-        { if (not($word/word)) then () else
+        { if (not($word/word[@l=$id])) then () else
             <ul> {
-            for $child in $word/word return local:print-phrase($child)
+            for $child in $word/word[@l=$id] return local:print-phrase($child)
             } </ul>
         }
     </li>
@@ -25,16 +25,18 @@ declare function local:print-phrase($word as element()) as element() {
 
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"></meta><meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1"></meta>
 <title>Eldamo : {$lang-name} Phrases</title>
 <link type="text/css" rel="stylesheet" href="../../css/global.css" />
 </head>
 <body>
-<p>
+<div id="nav-block" class="nav-block">
     [<a href="../../index.html">Home</a>] »
-    [<a href="../languages/index.html">Languages</a>] »
-    [<a href="../language-pages/lang-{$id}.html">{$lang-name}</a>]
-</p>
+<span class="breadcrumb-nav">
+    <a href="../languages/index.html">Languages</a> »&#160;
+</span>
+    <a href="../language-pages/lang-{$id}.html">{$lang-name}</a>
+</div>
 <hr/>
 <h1>{$lang-name} Phrases</h1>
 {xdb:html($lang/phrases/string())}

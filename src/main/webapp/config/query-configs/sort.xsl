@@ -7,8 +7,9 @@
     <xsl:key name="on-deriv" match="word[@l='n']" use="ref/deriv/@source"/> 
     <xsl:key name="on-ref" match="word[@l='on']" use="ref/@source"/> 
     <xsl:variable name="ordered-words" select="//word[@order]"/>
+    <xsl:variable name="version" select="/*/@version/string()"/>
 
-    <xsl:output cdata-section-elements="notes phonetics words names grammar phrases cognate source x-ref element deriv inflect cite related before" indent="yes"/> 
+    <xsl:output cdata-section-elements="notes phonetics words names grammar phrases cognate source x-ref element deriv inflect cite related before vocabulary neologisms deprecations" indent="yes"/> 
     
     <xsl:template match="/*">
         <xsl:variable name="main" select="/"/>
@@ -33,17 +34,29 @@
 
     <xsl:template match="word">
         <xsl:copy>
-            <xsl:copy-of select="@*[not(name()='mark')][not(name()='order')]"/>
+            <xsl:copy-of select="@*[not(name()='mark')][not(name()='page-id')]
+                [not(name()='neo-version')][not(name()='order')]"/>
             <xsl:if test="@order != ''">
 	            <xsl:variable name="word" select="."/>
                 <xsl:attribute name="order" select="format-number(count($ordered-words
                     [@l=$word/@l]
                     [@speech=$word/@speech]
                     [@order lt $word/@order]
-                ) * 100 + 100, '0000')"/>
+                ) * 100 + 100, '00000')"/>
             </xsl:if>
+            <xsl:if test="@l=('ns', 'nq', 'np')">
+                <xsl:if test="not(@neo-version)">
+                    <xsl:attribute name="neo-version" select="$version"/>
+                </xsl:if>
+                <xsl:copy-of select="@neo-version"/>
+            </xsl:if>
+            <xsl:if test="not(@page-id)">
+                <xsl:attribute name="page-id" select="xdb:hashcode(.)"/>
+            </xsl:if>
+            <xsl:copy-of select="@page-id"/>
             <xsl:copy-of select="@mark"/>
-            <xsl:apply-templates select="*[not(name()='word' or name()='ref')]"/>
+            <xsl:apply-templates select="notes"/>
+            <xsl:apply-templates select="*[not(name()='notes' or name()='word' or name()='ref')]"/>
             <xsl:apply-templates select="*[name()='ref']">
                 <xsl:sort select="q:normalize(@source)"/>
             </xsl:apply-templates>
@@ -110,6 +123,7 @@
             <xsl:when test="$word='n'">s</xsl:when>
             <xsl:when test="$word='ln'">s</xsl:when>
             <xsl:when test="$word='ns'">s</xsl:when>
+            <xsl:when test="$word='norths'">s</xsl:when>
             <xsl:when test="$word='ilk'">ilk</xsl:when>
             <xsl:when test="$word='dor'">ilk</xsl:when>
             <xsl:when test="$word='fal'">ilk</xsl:when>
@@ -125,8 +139,10 @@
             <xsl:when test="$word='aq'">q</xsl:when>
             <xsl:when test="$word='mq'">q</xsl:when>
             <xsl:when test="$word='eq'">q</xsl:when>
+            <xsl:when test="$word='nq'">q</xsl:when>
             <xsl:when test="$word='mp'">p</xsl:when>
             <xsl:when test="$word='ep'">p</xsl:when>
+            <xsl:when test="$word='np'">p</xsl:when>
             <xsl:when test="$word='pad'">ad</xsl:when>
             <xsl:when test="$word='?'">zzz</xsl:when>
             <xsl:otherwise><xsl:value-of select="$word"/></xsl:otherwise>

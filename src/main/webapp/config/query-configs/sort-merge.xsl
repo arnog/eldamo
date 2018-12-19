@@ -13,7 +13,7 @@
     <xsl:key name="on-deriv" match="word[@l='n']" use="ref/deriv/@source"/> 
     <xsl:key name="on-ref" match="word[@l='on']" use="ref/@source"/> 
 
-    <xsl:output cdata-section-elements="notes phonetics words names grammar phrases cognate source x-ref element deriv inflect cite related before" indent="yes"/> 
+    <xsl:output cdata-section-elements="notes phonetics words names grammar phrases cognate source x-ref element deriv inflect cite related before vocabulary neologisms deprecations" indent="yes"/> 
     
     <xsl:template match="/*">
         <xsl:variable name="main" select="/"/>
@@ -44,8 +44,16 @@
     </xsl:template>
 
     <xsl:template match="word">
+        <xsl:variable name="l" select="@l"/>
+        <xsl:variable name="v" select="@v"/>
         <xsl:copy>
             <xsl:copy-of select="@*[not(name()='mark')]"/>
+            <xsl:for-each select="$merge.xml/*/word[@v=$v and @l=$l]">
+                <xsl:copy-of select="@vetted"/>
+            </xsl:for-each>
+            <xsl:for-each select="$merge.xml/*/word[@v=$v and @l=$l]">
+                <xsl:copy-of select="@cat"/>
+            </xsl:for-each>
             <xsl:copy-of select="@mark"/>
             <xsl:apply-templates select="*[not(name()='word' or name()='ref')]"/>
             <xsl:apply-templates select="*[name()='ref']">
@@ -54,8 +62,6 @@
             <xsl:apply-templates select="*[name()='word']">
                 <xsl:sort select="concat(if (@l) then (@l) else '1', '::', translate(q:normalize(self::word/@v), ' ', ''))"/>
             </xsl:apply-templates>
-            <xsl:variable name="l" select="@l"/>
-            <xsl:variable name="v" select="@v"/>
             <xsl:for-each select="$merge.xml/*/word[@v=$v and @l=$l]">
                 <xsl:copy-of select="ref"/>
             </xsl:for-each>
@@ -127,6 +133,7 @@
             <xsl:when test="$word='n'">s</xsl:when>
             <xsl:when test="$word='ln'">s</xsl:when>
             <xsl:when test="$word='ns'">s</xsl:when>
+            <xsl:when test="$word='norths'">s</xsl:when>
             <xsl:when test="$word='ilk'">ilk</xsl:when>
             <xsl:when test="$word='dor'">ilk</xsl:when>
             <xsl:when test="$word='fal'">ilk</xsl:when>
@@ -142,8 +149,10 @@
             <xsl:when test="$word='aq'">q</xsl:when>
             <xsl:when test="$word='mq'">q</xsl:when>
             <xsl:when test="$word='eq'">q</xsl:when>
+            <xsl:when test="$word='nq'">q</xsl:when>
             <xsl:when test="$word='mp'">p</xsl:when>
             <xsl:when test="$word='ep'">p</xsl:when>
+            <xsl:when test="$word='np'">p</xsl:when>
             <xsl:when test="$word='pad'">ad</xsl:when>
             <xsl:when test="$word='?'">zzz</xsl:when>
             <xsl:otherwise><xsl:value-of select="$word"/></xsl:otherwise>

@@ -20,6 +20,33 @@
             <xquery-renderer content-type="html" mime-type="text/html" file="test.xq"/>
         </renderers>
     </query-controller>
+    <query-controller uri-pattern="/csv/base-export.*">
+        <simple-request-parser />
+        <query>
+            <whole-doc-query />
+        </query>
+        <renderers>
+            <xquery-renderer content-type="txt" mime-type="text/plain" file="base-export.xq"/>
+        </renderers>
+    </query-controller>
+    <query-controller uri-pattern="/valid/note-check.*">
+        <simple-request-parser />
+        <query>
+            <whole-doc-query />
+        </query>
+        <renderers>
+            <xquery-renderer content-type="html" mime-type="text/html" file="valid-note-check.xq"/>
+        </renderers>
+    </query-controller>
+    <query-controller uri-pattern="/etym/etym.*">
+        <simple-request-parser />
+        <query>
+            <whole-doc-query />
+        </query>
+        <renderers>
+            <xquery-renderer content-type="html" mime-type="text/html" file="etym.xq"/>
+        </renderers>
+    </query-controller>
     <query-controller uri-pattern="/sort.*">
         <simple-request-parser />
         <query>
@@ -82,6 +109,33 @@
         </query>
         <renderers>
             <xquery-renderer content-type="html" mime-type="text/html" file="word-index.xq"/>
+        </renderers>
+    </query-controller>
+    <query-controller uri-pattern="/vocabulary-indexes/*">
+        <uri-template-parser template='vocabulary-words-{id}.{content-type}' />
+        <query>
+            <whole-doc-query />
+        </query>
+        <renderers>
+            <xquery-renderer content-type="html" mime-type="text/html" file="vocabulary-index.xq"/>
+        </renderers>
+    </query-controller>
+    <query-controller uri-pattern="/neologism-indexes/*">
+        <uri-template-parser template='neologisms-{id}.{content-type}' />
+        <query>
+            <whole-doc-query />
+        </query>
+        <renderers>
+            <xquery-renderer content-type="html" mime-type="text/html" file="neologism-index.xq"/>
+        </renderers>
+    </query-controller>
+    <query-controller uri-pattern="/deprecation-indexes/*">
+        <uri-template-parser template='deprecations-{id}.{content-type}' />
+        <query>
+            <whole-doc-query />
+        </query>
+        <renderers>
+            <xquery-renderer content-type="html" mime-type="text/html" file="deprecation-index.xq"/>
         </renderers>
     </query-controller>
     <query-controller uri-pattern="/words/*">

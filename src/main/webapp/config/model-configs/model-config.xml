@@ -24,6 +24,7 @@
         <key name="deriv-to" match="word" use="deriv/@v" />
         <key name="deriv-to-ref" match="ref" use="deriv/@source" />
 
+        <key name="inflect-to-ref" match="ref" use="inflect/@source" />
         <key name="inflect-form-ref" type="string-list" match="ref" use="inflect/@form" />
         <key name="inflect-form-and-class-ref" type="string-list" match="ref" use="normalize-space(concat(inflect/@form, ' ', inflect/@variant, ' ', ../class/@form, ' ', ../class/@variant))" />
         <key name="inflect-table" match="inflect-table" use="@form" />
@@ -42,5 +43,9 @@
 
         <key name="word-code" match="word" type="string" use="xdb:hashcode(.)" />
         <key name="ref-code" match="ref" type="string" use="xdb:hashcode(.)" />
+
+        <key name="page-id" match="word" use="@page-id" />
+
+        <key name="deprecated-to" match="deprecated" use="@v" />
     </index-keys>
 </model-config>
